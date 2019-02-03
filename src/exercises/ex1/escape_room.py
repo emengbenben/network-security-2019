@@ -391,16 +391,3 @@ class EscapeRoom:
             else:
                 EscapeRoom.stutas = "dead"
         return EscapeRoom.stutas
-
-
-room = EscapeRoom()
-room.start()
-while(room.door == "closed"):
-    command = input(">> ")
-    response = room.command(command)
-    print(response)
-
-    #if dead or escaped then break loop
-    if room.status() == "escaped" or room.status() == "dead":
-        print(room.status())
-        break
