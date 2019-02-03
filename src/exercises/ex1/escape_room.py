@@ -52,6 +52,8 @@ class EscapeRoom:
             response = self.pryCommand(commandParts[1:], command_string)
         elif command == "wear":
             response = self.wearCommand(commandParts[1:], command_string)
+        else:
+            response = "This is not an effective command."
 
         EscapeRoom.clock = EscapeRoom.clock - 1  # clock-1 after a command
 
@@ -89,7 +91,7 @@ class EscapeRoom:
                     response = string1 +string2 +string3
             elif command_string == "look mirror":
                 EscapeRoom.mirror = True
-                if (EscapeRoom.hairpin == False):
+                if (EscapeRoom.hairpin_get == False):
                     EscapeRoom.hairpin = True
                     response = "You look in the mirror and see yourself... wait, there's a hairpin in your hair. Where did that come from?"
                 else:
@@ -183,9 +185,13 @@ class EscapeRoom:
             elif command_string == "get hammer":
                 if (EscapeRoom.hammer == True):
                     response = "You already have that."
+                else:
+                    response = "You don't see that."
             elif command_string == "get glasses":
                 if (EscapeRoom.glasses == True):
                     response = "You already have that."
+                else:
+                    response = "You don't see that."
             else:
                 response = "You don't see that."
         return response
@@ -209,59 +215,61 @@ class EscapeRoom:
 
     def unlockCommand(self, commandParts, command_string):
         response = ""
-        if commandParts[0] == "chest":
-            if EscapeRoom.chest == "open":
-                response = "It's already unlocked."
-            else:
-                if commandParts[2] == "hairpin":
-                    EscapeRoom.chest = "open"
-                    response = "You hear a click! It worked!"
-                else:
-                    response = "You don't have a unlocker-name"
-        elif commandParts[0] == "door":
-            if EscapeRoom.door == "open":
-                response = "It's already unlocked."
-            else:
-                if commandParts[2].isdigit() == False:
-                    "That's not a valid code."
-                else:
-                    if len(commandParts[2]) == 4:
-                        print(self.code)
-                        if commandParts[2] == self.code_string:
-                            EscapeRoom.door = "open"
-                            response = "You hear a click! It worked!"
-                        else:
-                            response = "That's not the right code!"
-                    else:
-                        response = "The code must be 4 digits."
-        elif commandParts[0] == "hairpin":
-            if EscapeRoom.hairpin == False:
-                response = "You don't see that here."
-            else:
-                response = "You can't unlock that!"
-        elif commandParts[0] == "board":
-            if EscapeRoom.floor == False:
-                response = "You don't see that here."
-            else:
-                response = "You can't unlock that!"
-        elif commandParts[0] == "hammer":
-            if EscapeRoom.hammer == False:
-                response = "You don't see that here."
-            else:
-                response = "You can't unlock that!"
-        elif commandParts[0] == "glasses":
-            if EscapeRoom.glasses == False:
-                response = "You don't see that here."
-            else:
-                response = "You can't unlock that!"
-        elif commandParts[0] == "clock":
-            response = "You can't unlock that!"
-        elif commandParts[0] == "mirror":
-            response = "You can't unlock that!"
-        elif commandParts[0] == "floor":
-            response = "You can't unlock that!"
+        if len(commandParts) == 1:
+            response = "with what?"
         else:
-            response = "You don't see that here."
+            if commandParts[0] == "chest":
+                if EscapeRoom.chest == "open":
+                    response = "It's already unlocked."
+                else:
+                    if commandParts[2] == "hairpin":
+                        EscapeRoom.chest = "open"
+                        response = "You hear a click! It worked!"
+                    else:
+                        response = "You don't have a unlocker-name"
+            elif commandParts[0] == "door":
+                if EscapeRoom.door == "open":
+                    response = "It's already unlocked."
+                else:
+                    if commandParts[2].isdigit() == False:
+                        "That's not a valid code."
+                    else:
+                        if len(commandParts[2]) == 4:
+                            if commandParts[2] == self.code_string:
+                                EscapeRoom.door = "open"
+                                response = "You hear a click! It worked!"
+                            else:
+                                response = "That's not the right code!"
+                        else:
+                            response = "The code must be 4 digits."
+            elif commandParts[0] == "hairpin":
+                if EscapeRoom.hairpin == False:
+                    response = "You don't see that here."
+                else:
+                    response = "You can't unlock that!"
+            elif commandParts[0] == "board":
+                if EscapeRoom.floor == False:
+                    response = "You don't see that here."
+                else:
+                    response = "You can't unlock that!"
+            elif commandParts[0] == "hammer":
+                if EscapeRoom.hammer == False:
+                    response = "You don't see that here."
+                else:
+                    response = "You can't unlock that!"
+            elif commandParts[0] == "glasses":
+                if EscapeRoom.glasses == False:
+                    response = "You don't see that here."
+                else:
+                    response = "You can't unlock that!"
+            elif commandParts[0] == "clock":
+                response = "You can't unlock that!"
+            elif commandParts[0] == "mirror":
+                response = "You can't unlock that!"
+            elif commandParts[0] == "floor":
+                response = "You can't unlock that!"
+            else:
+                response = "You don't see that here."
         return  response
 
     def openCommand(self, commandParts, command_string):
@@ -391,3 +399,4 @@ class EscapeRoom:
             else:
                 EscapeRoom.stutas = "dead"
         return EscapeRoom.stutas
+
