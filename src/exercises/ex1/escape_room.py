@@ -25,13 +25,13 @@ class EscapeRoom:
     def start(self):
         '''This method initializes the game'''
         self.code = random.randint(0, 9999)
-        print(self.code)
         self.code_string = str(self.code)
         while len(self.code_string) < 4:
             self.code_string = '0' + self.code_string  # prepend zero's (e.g., 0123)
-        list = [digit for digit in self.code_string]
-        list.sort()
-        self.comma_digit_list = ", ".join(list)
+        list1 = [digit for digit in self.code_string]
+        list2 = list(set(list1))
+        list2.sort()
+        self.comma_digit_list = ", ".join(list2)
 
     def command(self, command_string):
         '''This command accepts the user's command within the game'''
