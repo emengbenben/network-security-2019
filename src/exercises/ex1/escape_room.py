@@ -278,7 +278,7 @@ class EscapeRoom:
             if EscapeRoom.chest == "locked":
                 response = "It's locked."
             else:
-                if EscapeRoom.chest == "open":
+                if EscapeRoom.chest == "unlocked":
                     response = "It's already open!"
                 else:
                     response = "You open the chest."
@@ -330,7 +330,7 @@ class EscapeRoom:
                         if EscapeRoom.board == "closed":  # board is still closed
                             EscapeRoom.board = "open"
                             str1 = "You use the hammer to pry open the board. It takes some work, "
-                            str2 = "but with some blood and sweat, you mange to get it open."
+                            str2 = "but with some blood and sweat, you manage to get it open."
                             response = str1 + str2
                         else:
                             response = "It's already pried open."  # board is open
@@ -399,4 +399,5 @@ class EscapeRoom:
             else:
                 EscapeRoom.stutas = "dead"
         return EscapeRoom.stutas
+
 
