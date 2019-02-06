@@ -22,13 +22,9 @@ class EscapeRoom:
     code_string = ""
     comma_digit_list = ""
 
-    def __init__(self):
-        self.start()
-
     def start(self):
         '''This method initializes the game'''
         self.code = random.randint(0, 9999)
-        print(self.code)
         self.code_string = str(self.code)
         while len(self.code_string) < 4:
             self.code_string = '0' + self.code_string  # prepend zero's (e.g., 0123)
@@ -46,7 +42,7 @@ class EscapeRoom:
             response = self.lookCommand(commandParts[1:], command_string)
         elif command == "get":
             response = self.getCommand(commandParts[1:], command_string)
-        elif command == "Inventory":
+        elif command == "inventory":
             response = self.inventoryCommand(commandParts[1:], command_string)
         elif command == "unlock":
             response = self.unlockCommand(commandParts[1:], command_string)
@@ -59,8 +55,9 @@ class EscapeRoom:
         else:
             response = "This is not an effective command."
 
-        EscapeRoom.clock = EscapeRoom.clock - 1  # clock-1 after a command
-
+        self.clock = self.clock - 1  # clock-1 after a command
+        if(self.clock == 0):
+            response = response +"\nOh no! The clock starts ringing!!! After a few seconds, the room fills with a deadly gas..."
         return response
 
     def lookCommand(self, commandParts, command_string):
@@ -73,12 +70,12 @@ class EscapeRoom:
              response = str1+str2+str3+str4
         elif commandParts[0] == "in":
             if command_string == "look in chest":
-                if (EscapeRoom.hammer == False):
+                if (self.hammer == False):
                     response = "Inside the chest you see: a hammer."
                 else:
                     response = "Inside the chest you see: ."
             elif command_string == "look in board":
-                if (EscapeRoom.glasses == False):
+                if (self.glasses == False):
                     response = "Inside the board you see: a glasses."
                 else:
                     response = "Inside the board you see: ."
@@ -86,7 +83,7 @@ class EscapeRoom:
                 response = "You don't see that here."
         else:
             if command_string == "look door":
-                if (EscapeRoom.glasses == False):
+                if (self.glasses == False):
                     response = "The door is strong and highly secured. The door is locked and requires a 4-digit code to open."
                 else:
                     string1 = "The door is strong and highly secured. The door is locked and requires a 4-digit code to open."
@@ -94,9 +91,9 @@ class EscapeRoom:
                     string3 = self.comma_digit_list + "."
                     response = string1 +string2 +string3
             elif command_string == "look mirror":
-                EscapeRoom.mirror = True
-                if (EscapeRoom.hairpin_get == False):
-                    EscapeRoom.hairpin = True
+                self.mirror = True
+                if (self.hairpin_get == False):
+                    self.hairpin = True
                     response = "You look in the mirror and see yourself... wait, there's a hairpin in your hair. Where did that come from?"
                 else:
                     response = "You look in the mirror and see yourself."
@@ -104,28 +101,28 @@ class EscapeRoom:
                 response = "An old chest. It looks worn, but it's still sturdy."
             elif command_string == "look floor":
                 response = "The floor makes you nervous. It feels like it could fall in. One of the boards is loose."
-                EscapeRoom.floor = True
+                self.floor = True
             elif command_string == "look board":
-                if (EscapeRoom.floor == False):
+                if (self.floor == False):
                     response = "You don't see that here."
                 else:
-                    if (EscapeRoom.pry == False):
+                    if (self.pry == False):
                         response = "The board is loose, but won't come up when you pull on it. Maybe if you pried it open with something."
                     else:
                         response = "The board has been pulled open. You can look inside."
             elif command_string == "look hairpin":
-                EscapeRoom.hairpin = True
-                if (EscapeRoom.mirror == False):
+                self.hairpin = True
+                if (self.mirror == False):
                     response = "You don't see that here."
                 else:
                     response = "You see nothing special."
             elif command_string == "look hammer":
-                if (EscapeRoom.hammer == False):
+                if (self.hammer == False):
                     response = "You don't see that here."
                 else:
                     response = "You see nothing special."
             elif command_string == "look glasses":
-                if (EscapeRoom.glasses == False):
+                if (self.glasses == False):
                     response = "You see nothing special."
                 else:
                     response = "These look like spy glasses. Maybe they reveal a clue!"
@@ -139,21 +136,21 @@ class EscapeRoom:
         response = ""
         if len(commandParts) > 1 and commandParts[1] == "from":
             if command_string == "get hammer from chest":
-                if  EscapeRoom.chest == "locked":
+                if  self.chest == "locked":
                     response = "It's not open."
                 else:
-                    if (EscapeRoom.hammer == False):
+                    if (self.hammer == False):
                         response = "You got it."
-                        EscapeRoom.hammer = True
+                        self.hammer = True
                     else:
                         response = "You don't see that."
             elif command_string == "get glasses from board":
-                if (EscapeRoom.board == "closed"):
+                if (self.board == "closed"):
                     response = "It's not open."
                 else:
-                    if (EscapeRoom.glasses == False):
+                    if (self.glasses == False):
                         response = "You got it."
-                        EscapeRoom.glasses = True
+                        self.glasses = True
                     else:
                         response = "You don't see that."
             else:
@@ -163,16 +160,16 @@ class EscapeRoom:
                     response = "You don't see that."
         else:
             if command_string == "get hairpin":
-                if (EscapeRoom.hairpin == False):
+                if (self.hairpin == False):
                     response = "You don't see that."
                 else:
-                    if (EscapeRoom.hairpin_get == False):
+                    if (self.hairpin_get == False):
                         response = "You got it."
-                        EscapeRoom.hairpin_get = True
+                        self.hairpin_get = True
                     else:
                         response = "You already have that."
             elif command_string == "get board":
-                if (EscapeRoom.floor == False):
+                if (self.floor == False):
                     response = "You don't see that."
                 else:
                     response = "You can't get that."
@@ -187,12 +184,12 @@ class EscapeRoom:
             elif command_string == "get floor":
                 response = "You can't get that."
             elif command_string == "get hammer":
-                if (EscapeRoom.hammer == True):
+                if (self.hammer == True):
                     response = "You already have that."
                 else:
                     response = "You don't see that."
             elif command_string == "get glasses":
-                if (EscapeRoom.glasses == True):
+                if (self.glasses == True):
                     response = "You already have that."
                 else:
                     response = "You don't see that."
@@ -223,16 +220,16 @@ class EscapeRoom:
             response = "with what?"
         else:
             if commandParts[0] == "chest":
-                if EscapeRoom.chest == "open":
+                if self.chest == "open":
                     response = "It's already unlocked."
                 else:
                     if commandParts[2] == "hairpin":
-                        EscapeRoom.chest = "open"
+                        self.chest = "open"
                         response = "You hear a click! It worked!"
                     else:
                         response = "You don't have a unlocker-name"
             elif commandParts[0] == "door":
-                if EscapeRoom.door == "open":
+                if self.door == "open":
                     response = "It's already unlocked."
                 else:
                     if commandParts[2].isdigit() == False:
@@ -240,29 +237,29 @@ class EscapeRoom:
                     else:
                         if len(commandParts[2]) == 4:
                             if commandParts[2] == self.code_string:
-                                EscapeRoom.door = "open"
+                                self.door = "open"
                                 response = "You hear a click! It worked!"
                             else:
                                 response = "That's not the right code!"
                         else:
                             response = "The code must be 4 digits."
             elif commandParts[0] == "hairpin":
-                if EscapeRoom.hairpin == False:
+                if self.hairpin == False:
                     response = "You don't see that here."
                 else:
                     response = "You can't unlock that!"
             elif commandParts[0] == "board":
-                if EscapeRoom.floor == False:
+                if self.floor == False:
                     response = "You don't see that here."
                 else:
                     response = "You can't unlock that!"
             elif commandParts[0] == "hammer":
-                if EscapeRoom.hammer == False:
+                if self.hammer == False:
                     response = "You don't see that here."
                 else:
                     response = "You can't unlock that!"
             elif commandParts[0] == "glasses":
-                if EscapeRoom.glasses == False:
+                if self.glasses == False:
                     response = "You don't see that here."
                 else:
                     response = "You can't unlock that!"
@@ -279,37 +276,37 @@ class EscapeRoom:
     def openCommand(self, commandParts, command_string):
         response = ""
         if commandParts[0] == "chest":
-            if EscapeRoom.chest == "locked":
+            if self.chest == "locked":
                 response = "It's locked."
             else:
-                if EscapeRoom.chest == "unlocked":
+                if self.chest == "unlocked":
                     response = "It's already open!"
                 else:
                     response = "You open the chest."
-                    EscapeRoom.chest = "unlocked"
+                    self.chest = "unlocked"
         elif commandParts[0] == "door":
-            if EscapeRoom.door == "closed":
+            if self.door == "closed":
                 response = "It's locked."
             else:
                 response = "You open the door."
 
         elif commandParts[0] == "hairpin":
-            if EscapeRoom.hairpin == False:
+            if self.hairpin == False:
                 response = "You don't see that."
             else:
                 response = "You can't open that!"
         elif commandParts[0] == "board":
-            if EscapeRoom.floor == False:
+            if self.floor == False:
                 response = "You don't see that."
             else:
                 response = "You can't open that!"
         elif commandParts[0] == "hammer":
-            if EscapeRoom.hammer == False:
+            if self.hammer == False:
                 response = "You don't see that."
             else:
                 response = "You can't open that!"
         elif commandParts[0] == "glasses":
-            if EscapeRoom.glasses == False:
+            if self.glasses == False:
                 response = "You don't see that."
             else:
                 response = "You can't open that!"
@@ -326,13 +323,13 @@ class EscapeRoom:
     def pryCommand(self, commandParts, command_string):
         response = ""
         if commandParts[0] == "board":
-            if (EscapeRoom.floor == False):  # board is invisble
+            if (self.floor == False):  # board is invisble
                 response = "You don't see that."
             else:
-                if EscapeRoom.hammer == True:  # if player has hammer
+                if self.hammer == True:  # if player has hammer
                     if command_string == "pry board with hammer":
-                        if EscapeRoom.board == "closed":  # board is still closed
-                            EscapeRoom.board = "open"
+                        if self.board == "closed":  # board is still closed
+                            self.board = "open"
                             str1 = "You use the hammer to pry open the board. It takes some work, "
                             str2 = "but with some blood and sweat, you manage to get it open."
                             response = str1 + str2
@@ -344,19 +341,19 @@ class EscapeRoom:
                     response = "You don't have a hammer."
 
         elif commandParts[0] == "hairpin":
-            if EscapeRoom.hairpin == False:
+            if self.hairpin == False:
                 response = "You don't see that."
             else:
                 response = "Don't be stupid! That won't work!"
 
         elif commandParts[0] == "hammer":
-            if EscapeRoom.hammer == False:
+            if self.hammer == False:
                 response = "You don't see that."
             else:
                 response = "You can't open that!"
 
         elif commandParts[0] == "glasses":
-            if EscapeRoom.glasses == False:
+            if self.glasses == False:
                 response = "You don't see that."
             else:
                 response = "You can't open that!"
@@ -378,12 +375,12 @@ class EscapeRoom:
     def wearCommand(self, commandParts, command_string):
         response = ""
         if commandParts[0] == "glasses":
-            if EscapeRoom.glasses == False:
+            if self.glasses == False:
                 response = "You don't have a glasses."
             else:
-                if EscapeRoom.glasses_wear == False:
+                if self.glasses_wear == False:
                     response = "You are now wearing the glasses."
-                    EscapeRoom.glasses_wear == True
+                    self.glasses_wear == True
                 else:
                     response = "You're already wearing them!"
         else:
@@ -392,16 +389,15 @@ class EscapeRoom:
 
     def status(self):
         '''Reports whether the users is "dead", "locked", or "escaped"'''
-        if (EscapeRoom.door == "closed"):
-            if (EscapeRoom.clock > 0):
-                EscapeRoom.stutas = "locked"
+        string = ""
+        if (self.door == "closed"):
+            if (self.clock > 0):
+                self.stutas = "locked"
             else:
-                EscapeRoom.stutas = "dead"
+                self.stutas = "dead"
         else:
-            if (EscapeRoom.clock > 0):
-                EscapeRoom.stutas = "escaped"
+            if (self.clock > 0):
+                self.stutas = "escaped"
             else:
-                EscapeRoom.stutas = "dead"
-        return EscapeRoom.stutas
-
-
+                self.stutas = "dead"
+        return self.stutas
