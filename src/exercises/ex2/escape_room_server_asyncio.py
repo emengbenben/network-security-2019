@@ -12,21 +12,20 @@ class EscapeServerClientProtocol(asyncio.Protocol):
         self.room = EscapeRoom()
         self.room.start()
     def data_received(self, data):
-        output = self.room.command(data.decode())
+        string = data.decode()
+        string = string[:-1]
+        output = self.room.command(string)
         self.transport.write(output.encode())
 
         status = self.room.status()
         if status == "dead":
             self.transport.write(("\r\n"+status).encode())
         elif status == "escaped":
-            if data.decode() == "open door":
+            if string == "open door":
                 self.transport.write(("\r\n"+status).encode())
 
-
-        #print('Close the client socket')
-        #self.transport.close()
-
 loop = asyncio.get_event_loop()
+
 # Each client connection will create a new protocol instance
 coro = loop.create_server(EscapeServerClientProtocol, '127.0.0.1', 7888)
 
