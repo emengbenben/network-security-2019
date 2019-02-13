@@ -7,14 +7,15 @@ stdin_queue = []
 class EscapeClientProtocol(asyncio.Protocol):
     def __init__(self, loop):
         self.loop = loop
+        self.sign = 0
 
     def connection_made(self, transport):
         self.transport = transport
 
     def data_received(self, data):
+        self.sign = 1
         if "escaped" not in data.decode() and "dead" not in data.decode():
             print(data.decode())
-            command = handle_stdin()
         else:
             print(data.decode())
             self.transport.close()
@@ -23,7 +24,6 @@ class EscapeClientProtocol(asyncio.Protocol):
         print('The server closed the connection')
         print('Stop the event loop')
         self.loop.stop()
-
 
 def handle_stdin():
     line_in = sys.stdin.readline()
@@ -41,6 +41,10 @@ async def game_runner(protocol):
     while True:
         command = await async_input(">> ")
         protocol.transport.write(command.encode())
+
+        while protocol.sign == 0:
+            await asyncio.sleep(0.001)
+        protocol.sign = 0
         # await a response... see if you can figure this part out!
 
 loop = asyncio.get_event_loop()
