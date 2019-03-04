@@ -5,8 +5,8 @@ import playground
 class EscapeServerClientProtocol(asyncio.Protocol):
 
     def connection_made(self, transport):
-        #peername = transport.get_extra_info('peername')
-        #print('Connection from {}'.format(peername))
+        peername = transport.get_extra_info('peername')
+        print('Connection from {}'.format(peername))
 
         self.transport = transport
 
@@ -33,7 +33,7 @@ coro = playground.create_server(EscapeServerClientProtocol, '20191.10.20.30', 62
 server = loop.run_until_complete(coro)
 
 # Serve requests until Ctrl+C is pressed
-print('Serving on {}'.format(server.sockets[0].getsockname()))
+print('Serving on {}')
 try:
     loop.run_forever()
 except KeyboardInterrupt:
