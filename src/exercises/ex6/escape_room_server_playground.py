@@ -28,7 +28,7 @@ class EscapeServerClientProtocol(asyncio.Protocol):
 loop = asyncio.get_event_loop()
 
 # Each client connection will create a new protocol instance
-coro = playground.create_server(EscapeServerClientProtocol, '127.0.0.1', 62264)
+coro = playground.create_server(EscapeServerClientProtocol, '20191.10.20.30', 62264)
 
 server = loop.run_until_complete(coro)
 
