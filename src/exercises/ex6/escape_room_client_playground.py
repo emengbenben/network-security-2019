@@ -1,5 +1,4 @@
 import asyncio
-from aioconsole import ainput
 import sys
 import playground
 class EscapeClientProtocol(asyncio.Protocol):
