@@ -5,8 +5,8 @@ import playground
 class EscapeServerClientProtocol(asyncio.Protocol):
 
     def connection_made(self, transport):
-        peername = transport.get_extra_info('peername')
-        print('Connection from {}'.format(peername))
+        #peername = transport.get_extra_info('peername')
+        #print('Connection from {}'.format(peername))
 
         self.transport = transport
 
