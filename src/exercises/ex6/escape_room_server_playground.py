@@ -1,3 +1,4 @@
+import asyncio
 from escape_room import EscapeRoom
 import playground
 
