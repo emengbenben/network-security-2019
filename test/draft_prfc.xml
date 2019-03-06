@@ -43,17 +43,189 @@
 
 
 
-<rfc category="std" docName="draft_prfc" ipr="playgroundStd_v1_0" number="1">
-    <front>
-            <title abbrev="PRFC's">Playground Request For Comments</title>
-            
-    </front>
+<rfc category="std" docName="rfc1" number="1">
+ <!-- category values: std, bcp, info, exp, and historic
+    ipr values: trust200902, noModificationTrust200902, noDerivativesTrust200902,
+       or pre5378Trust200902, playgroundWinter201501
+    you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+    they will automatically be output with "(if approved)" -->
 
-    <middle>
-    </middle>
+ <!-- ***** FRONT MATTER ***** -->
 
-    <back>
-    </back>
+ <front>
+   <!-- The abbreviated title is used in the page header - it is only necessary if the 
+        full title is longer than 39 characters -->
 
+   <title abbrev="PRFC's">GoNuts Client Server Framework</title>
+
+   <!-- add 'role="editor"' below for the editors if appropriate -->
+
+   <!-- Another author who claims to be an editor -->
+
+   <author fullname="Golden Nugget" initials="G.N." role="company"
+           surname="Nuggent">
+     <organization>JHU Network Security Spring 2019</organization>
+
+     <address>
+       <postal>
+         <street>JHU Malone MSSI Lab</street>
+
+         <!-- Reorder these if your country does things differently -->
+
+         <city>Baltimore</city>
+
+         <region>MD</region>
+
+         <code>21218</code>
+
+         <country>USA</country>
+       </postal>
+
+       <phone>+1 123-456-7891</phone>
+
+       <email>golden_nugget@jhu.edu</email>
+
+       <!-- uri and facsimile elements may also be added -->
+     </address>
+   </author>
+
+   <date year="2019" />
+
+   <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
+        in the current day for you. If only the current year is specified, xml2rfc will fill 
+     in the current day and month for you. If the year is not the current one, it is 
+     necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
+     purpose of calculating the expiry date).  With drafts it is normally sufficient to 
+     specify just the year. -->
+
+   <!-- Meta-data Declarations -->
+
+   <area>General</area>
+
+   <workgroup>Playground Experiment Employee</workgroup>
+
+   <!-- WG name at the upperleft corner of the doc,
+        IETF is fine for individual submissions.  
+     If this element is not present, the default is "Network Working Group",
+        which is used by the RFC Editor as a nod to the history of the IETF. -->
+
+   <keyword>GNF</keyword>
+
+   <!-- Keywords will be incorporated into HTML output
+        files in a meta tag but they have no effect on text or nroff
+        output. If you submit your draft to the RFC Editor, the
+        keywords will be used for the search engine. -->
+ </front>
+
+ <middle>
+   <section title="Introduction">
+     <t>The Golden Nugget Casino PRFC defines the client-server framework that will used by our company to receive the right data fields and also send the right fields to the users. It defines how the regisyration, login and game playing packets will be sent to and fro. </t>
+     <t>This document describes the packets and each of its fields along with their right data types. </t>
+   </section>
+   
+   <section title="Functional Specifications">
+   
+     <section title="New User Packet">
+      <t>
+        The new user packet definws the fields that are required for registering a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here.
+      </t>
+      <t>
+        class NewUser(PacketType):
+            DEFINITION_IDENTIFIER = "NuggetFramework.type"
+            DEFINITION_VERSION = "1.0"
+            Body = [
+                ("Email", STRING),
+                ("Pwd", STRING),
+                ("Conf_Pwd", STRING),
+                ("Company_Name", STRING),
+                ("Addr", STRING)
+            ]
+       </t>
+       
+       <t>
+       NewUser:
+       Email: This is the email address used for registering. A check will be done as to whether it is a legitimate email address or not using the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a check on the JHu email ID will be done.
+       Pwd: The password needs to have atleast 6 characters containing both characters and numbers (atleast 1 character and 1 number). This will be stored as a hash value.
+       </t>
+      </section>
+      
+      <section title="Transaction"> 
+      <t>
+      Transaction:
+          
+      </t>
+      <t>    
+       class Transaction(PacketType):
+            DEFINITION_IDENTIFIER = "NuggetFramework.type"
+            DEFINITION_VERSION = "1.0"
+            Body = [
+                ("Token", STRING),
+                ("Bet", STRING),
+                ("GameID", STRING)
+            ]
+      </t>
+      <t>
+      
+      </t>
+      </section>  
+      
+      <section title="Registered User"> 
+      <t>
+      The Registered user packet definws the fields that are required for a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here
+      </t>
+      <t>
+        class RegisteredUser(PacketType):
+             DEFINITION_IDENTIFIER = "NuggetFramework.type"
+             DEFINITION_VERSION = "1.0"
+             Body = [
+                 ("Email",STRING)
+                 ("Password",STRING)
+             ]
+      </t>
+      <t>
+      
+      </t>
+      </section>
+     
+      <section title="Error Handling"> 
+      <t>
+      
+      </t>
+      <t>
+       class ErrorHandling(PacketType):
+           Body = [
+               ("Message",STRING)
+           ]
+      </t>
+      <t>
+      
+      </t>
+      </section> 
+       
+   </section>
+ </middle>
+
+ <!--  *****BACK MATTER ***** -->
+
+ <back>
+   <!-- References split into informative and normative -->
+
+   <!-- There are 2 ways to insert reference entries from the citation libraries:
+    1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+    2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+       (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+
+    Both are cited textually in the same manner: by using xref elements.
+    If you use the PI option, xml2rfc will, by default, try to find included files in the same
+    directory as the including file. You can also define the XML_LIBRARY environment variable
+    with a value containing a set of directories to search.  These can be either in the local
+    filing system or remote ones accessed by http (http://domain/dir/... ).-->
+
+
+   <!-- Change Log
+
+v01 2019-03-06  EBD   Initial version
+
+  -->
+ </back>
 </rfc>
-
