@@ -127,7 +127,7 @@
    
      <section title="New User Packet">
       <t>The new user packet definws the fields that are required for registering a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here.</t>
-      <t>class NewUser(PacketType):
+      <t>class NewUser(PacketType):</t>
         <t>    DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
         <t>    DEFINITION_VERSION = "1.0"</t>
         <t>    Body = [</t>
