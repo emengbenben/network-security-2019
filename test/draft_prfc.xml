@@ -126,20 +126,16 @@
    <section title="Functional Specifications">
    
      <section title="New User Packet">
-      <t>
-        The new user packet definws the fields that are required for registering a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here.
-      </t>
-      <t>
-        class NewUser(PacketType):
-            DEFINITION_IDENTIFIER = "NuggetFramework.type"
-            DEFINITION_VERSION = "1.0"
-            Body = [
-                ("Email", STRING),
-                ("Pwd", STRING),
-                ("Conf_Pwd", STRING),
-                ("Company_Name", STRING),
-            ]
-       </t>
+      <t>The new user packet definws the fields that are required for registering a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here.</t>
+      <t>class NewUser(PacketType):
+        <t>    DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
+        <t>    DEFINITION_VERSION = "1.0"</t>
+        <t>    Body = [</t>
+        <t>        ("Email", STRING),</t>
+        <t>        ("Pwd", STRING),</t>
+        <t>        ("Conf_Pwd", STRING),</t>
+        <t>        ("Company_Name", STRING),</t>
+        <t>    ]</t>
        
        <t>NewUser:</t>
        <t>Email: This is the email address used for registering. A check will be done as to whether it is a legitimate email address or not using the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a check on the JHu email ID will be done.</t>
@@ -150,60 +146,49 @@
       </section>
       
       <section title="Transaction"> 
-      <t>
-      This class is used to define information that may be required when completing a transcation between the client and server. Any transaction related to the client, server and the bank will be included in this packet.
+      <t>This class is used to define information that may be required when completing a transcation between the client and server. Any transaction related to the client, server and the bank will be included in this packet.</t>
+ 
+      <t>   class Transaction(PacketType): </t>
+      <t>      DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
+      <t>      DEFINITION_VERSION = "1.0"</t>
+      <t>      Body = [</t>
+      <t>          ("Token", STRING),</t>
+      <t>          ("Bet", STRING),</t>
+      <t>          ("GameID", STRING)</t>
+      <t>      ]</t>
       
-      </t>
-      <t>    
-       class Transaction(PacketType):
-            DEFINITION_IDENTIFIER = "NuggetFramework.type"
-            DEFINITION_VERSION = "1.0"
-            Body = [
-                ("Token", STRING),
-                ("Bet", STRING),
-                ("GameID", STRING)
-            ]
-      </t>
-      <t>
-      Token: This field specifies the token received from the transaction between the bank and the client
-      Bet: This field specifies the bet placed by the client
-      GameID: This field specifies the game that the client wish to play  
-      </t>
+      <t>Transaction:</t>
+      <t>Token: This field specifies the token received from the transaction between the bank and the client.</t>
+      <t>Bet: This field specifies the bet placed by the client</t>
+      <t>GameID: This field specifies the game that the client wish to play.</t>
       </section>  
       
       <section title="Registered User"> 
-      <t>
-      The Registered user packet definws the fields that are required for a registered user to login in. 
-      </t>
-      <t>
-        class RegisteredUser(PacketType):
-             DEFINITION_IDENTIFIER = "NuggetFramework.type"
-             DEFINITION_VERSION = "1.0"
-             Body = [
-                 ("Email",STRING)
-                 ("Password",STRING)
-             ]
-      </t>
-      <t>
-      Registered User:
-      Email: This is the email address used login in. A check will be done as to whether it is stored in the database.
-      Pwd: The password needs to have atleast 6 characters containing both characters and numbers (atleast 1 character and 1 number). It will be checked whether matches the Email. 
+      <t>The Registered user packet definws the fields that are required for a registered user to login in.</t>
       
-      </t>
+      <t>class RegisteredUser(PacketType):</t>
+      <t>      DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
+      <t>      DEFINITION_VERSION = "1.0"</t>
+      <t>      Body = [</t>
+      <t>         ("Email",STRING)</t>
+      <t>         ("Password",STRING)</t>
+      <t>      ]</t>
+ 
+      <t>Registered User:</t>
+      <t>Email: This is the email address used login in. A check will be done as to whether it is stored in the database.</t>
+      <t>Pwd: The password needs to have atleast 6 characters containing both characters and numbers (atleast 1 character and 1 number). It will be checked whether matches the Email.</t>
       </section>
      
       <section title="Error Handling"> 
-      <t>
-      This class is to define error handling packet which is sent to client from server. 
-      </t>
+      <t>This class is to define error handling packet which is sent to client from server.</t>
       
-      <t>
-       class ErrorHandling(PacketType):
-           Body = [
-               ("Message",STRING)
-               ("ErrorCode", INT)
-           ]
-      </t>
+      <t>class ErrorHandling(PacketType):</t>
+      <t>     DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
+      <t>     DEFINITION_VERSION = "1.0"</t>
+      <t>     Body = [</t>
+      <t>         ("Message",STRING)</t>
+      <t>         ("ErrorCode", INT)</t>
+      <t>     ]</t>
       
       <t><list style="symbols">
         <t>CODE     - Can be set to 1,2,3,4,5,6</t>
