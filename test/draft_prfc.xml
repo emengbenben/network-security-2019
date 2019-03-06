@@ -203,7 +203,7 @@
                ("ErrorCode", INT)
            ]
       </t>
-      <t>
+      
       <t><list style="symbols">
         <t>CODE     - Can be set to 1,2,3,4,5,6</t>
     <t><list style="numbers">
@@ -214,7 +214,7 @@
         <t> Invalid Amount</t>
         <t> Insufficient Balance</t>
     </list></t>
-      </t>
+     
       </section> 
       
       <section title="Data Packets"> 
