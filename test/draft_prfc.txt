@@ -1,0 +1,336 @@
+
+
+
+Network Working Group                                    G. Nuggent, Ed.
+Request for Comments: 1                 JHU Network Security Spring 2019
+Category: Standards Track                                     March 2019
+
+
+                     GoNuts Client Server Framework
+
+
+Status of this Memo
+
+   This document specifies a Playgrounds standards track protocol for
+   the Playground Experiment, and requests discussion and suggestions
+   for improvements.  Distribution of this memo is unlimited.
+
+Copyright Notice
+
+   Copyright (C) Seth James Nielson (2019).  All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nuggent                      Standards Track                    [Page 1]
+
+RFC 1                            PRFC's                       March 2019
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
+   2.  Functional Specifications . . . . . . . . . . . . . . . . . . . 3
+     2.1.  New User Packet . . . . . . . . . . . . . . . . . . . . . . 3
+     2.2.  Transaction . . . . . . . . . . . . . . . . . . . . . . . . 3
+     2.3.  Registered User . . . . . . . . . . . . . . . . . . . . . . 3
+     2.4.  Error Handling  . . . . . . . . . . . . . . . . . . . . . . 4
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+   Intellectual Property and Copyright Statements  . . . . . . . . . . 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nuggent                      Standards Track                    [Page 2]
+
+RFC 1                            PRFC's                       March 2019
+
+
+1.  Introduction
+
+   The Golden Nugget Casino PRFC defines the client-server framework
+   that will used by our company to receive the right data fields and
+   also send the right fields to the users.  It defines how the
+   regisyration, login and game playing packets will be sent to and fro.
+
+   This document describes the packets and each of its fields along with
+   their right data types.
+
+
+2.  Functional Specifications
+
+2.1.  New User Packet
+
+   The new user packet definws the fields that are required for
+   registering a user who is not previously registered.  Already
+   registered users will not be able to register and password, username
+   and emails checks will be done here.
+
+   class NewUser(PacketType): DEFINITION_IDENTIFIER =
+   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ("Email",
+   STRING), ("Pwd", STRING), ("Conf_Pwd", STRING), ("Company_Name",
+   STRING), ("Addr", STRING) ]
+
+   NewUser: Email: This is the email address used for registering.  A
+   check will be done as to whether it is a legitimate email address or
+   not using the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a
+   check on the JHu email ID will be done.  Pwd: The password needs to
+   have atleast 6 characters containing both characters and numbers
+   (atleast 1 character and 1 number).  This will be stored as a hash
+   value.
+
+2.2.  Transaction
+
+   Transaction:
+
+   class Transaction(PacketType): DEFINITION_IDENTIFIER =
+   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ("Token",
+   STRING), ("Bet", STRING), ("GameID", STRING) ]
+
+2.3.  Registered User
+
+   The Registered user packet definws the fields that are required for a
+   user who is not previously registered.  Already registered users will
+   not be able to register and password, username and emails checks will
+   be done here
+
+
+
+
+Nuggent                      Standards Track                    [Page 3]
+
+RFC 1                            PRFC's                       March 2019
+
+
+   class RegisteredUser(PacketType): DEFINITION_IDENTIFIER =
+   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [
+   ("Email",STRING) ("Password",STRING) ]
+
+2.4.  Error Handling
+
+   class ErrorHandling(PacketType): Body = [ ("Message",STRING) ]
+
+
+Author's Address
+
+   Golden Nugget (editor)
+   JHU Network Security Spring 2019
+   JHU Malone MSSI Lab
+   Baltimore, MD  21218
+   USA
+
+   Phone: +1 123-456-7891
+   Email: golden_nugget@jhu.edu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nuggent                      Standards Track                    [Page 4]
+
+RFC 1                            PRFC's                       March 2019
+
+
+Full Copyright Statement
+
+   Copyright (C) Seth James Nielson (2019).  All Rights Reserved.
+
+   This document and translations of it may be copied and furnished to
+   others, and derivative works that comment on or otherwise explain it
+   or assist in its implementation may be prepared, copied, published
+   and distributed, in whole or in part, without restriction of any
+   kind, provided that the above copyright notice and this paragraph are
+   included on all such copies and derivative works.  However, this
+   document itself may not be modified in any way, such as by removing
+   the copyright notice or references to the PLAYGROUND experiment or
+   other associated organizations, except by explicit permission.
+
+   The limited permissions granted above are perpetual and will not be
+   revoked by SETH JAMES NIELSON or his successors or assigns.
+
+   This document and the information contained herein is provided on an
+   "AS IS" basis and SETH JAMES NIELSON and associated academic
+   institutions DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Intellectual Property
+
+   The PLAYGROUND framework and student submissions for PLAYGROUND are
+   intended to be free of any intellectual property conflicts.  All
+   submitting parties, especially students, are not allowed to submit
+   source code, specifications, or other components that are known to be
+   protected by copyright, patents, or other IP mechanisms.  Students
+   submitting creative content grant shared rights and ownership of
+   their content to the PLAYGROUND project.  Specifically, any
+   submission can be used in future educational settings including
+   subsequent PLAYGROUND experiments.
+
+   Any interested party is invited to bring to the experiment director's
+   attention any copyrights, patents or patent applications, or other
+   proprietary rights which may cover technology that may be currently
+   in use without permission.
+
+   It should be noted that these statements have not been reviewed by
+   legal counsel.  Moreover, the academic institutions at which
+   PLAYGROUND experiments take place may have additional or even
+   conflicting copyright and intellectual property rules.  Accordingly,
+   concerned parties may need to contact their own lawyer and/or
+   resources at their institution to understand the rights and
+
+
+
+Nuggent                      Standards Track                    [Page 5]
+
+RFC 1                            PRFC's                       March 2019
+
+
+   limitations associated with code donated to a PLAYGROUND experiment.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nuggent                      Standards Track                    [Page 6]
+
