@@ -62,13 +62,13 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
    2.  Functional Specifications . . . . . . . . . . . . . . . . . . . 3
      2.1.  New User Packet . . . . . . . . . . . . . . . . . . . . . . 3
-     2.2.  Transaction . . . . . . . . . . . . . . . . . . . . . . . . 3
-     2.3.  Registered User . . . . . . . . . . . . . . . . . . . . . . 3
+     2.2.  Transaction . . . . . . . . . . . . . . . . . . . . . . . . 4
+     2.3.  Registered User . . . . . . . . . . . . . . . . . . . . . . 4
      2.4.  Error Handling  . . . . . . . . . . . . . . . . . . . . . . 4
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . . 4
-   Intellectual Property and Copyright Statements  . . . . . . . . . . 5
-
-
+     2.5.  Data Packets  . . . . . . . . . . . . . . . . . . . . . . . 5
+     2.6.  Machine State . . . . . . . . . . . . . . . . . . . . . . . 5
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . . 5
+   Intellectual Property and Copyright Statements  . . . . . . . . . . 6
 
 
 
@@ -118,7 +118,7 @@ RFC 1                            PRFC's                       March 2019
    The Golden Nugget Casino PRFC defines the client-server framework
    that will used by our company to receive the right data fields and
    also send the right fields to the users.  It defines how the
-   regisyration, login and game playing packets will be sent to and fro.
+   registration, login and game playing packets will be sent to and fro.
 
    This document describes the packets and each of its fields along with
    their right data types.
@@ -136,30 +136,30 @@ RFC 1                            PRFC's                       March 2019
    class NewUser(PacketType): DEFINITION_IDENTIFIER =
    "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ("Email",
    STRING), ("Pwd", STRING), ("Conf_Pwd", STRING), ("Company_Name",
-   STRING), ("Addr", STRING) ]
+   STRING), ]
 
-   NewUser: Email: This is the email address used for registering.  A
-   check will be done as to whether it is a legitimate email address or
-   not using the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a
-   check on the JHu email ID will be done.  Pwd: The password needs to
-   have atleast 6 characters containing both characters and numbers
-   (atleast 1 character and 1 number).  This will be stored as a hash
-   value.
+   NewUser:
 
-2.2.  Transaction
+   Email: This is the email address used for registering.  A check will
+   be done as to whether it is a legitimate email address or not using
+   the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a check on
+   the JHu email ID will be done.
 
-   Transaction:
+   Pwd: The password needs to have atleast 6 characters containing both
+   characters and numbers (atleast 1 character and 1 number).  This will
+   be stored as a hash value.
 
-   class Transaction(PacketType): DEFINITION_IDENTIFIER =
-   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ("Token",
-   STRING), ("Bet", STRING), ("GameID", STRING) ]
+   Conf_Pwd: This is to confirm the password entered in the previous
+   field.  Both of these must match to validate the password.  This will
+   also be stored as a hadh value.
 
-2.3.  Registered User
+   Company_Name: The name of the company must be mentioned aso we can
+   keep a track of which user is currently playing and which company is
+   earning more money so we can accordingly adjust game levels for each
+   company separately.
 
-   The Registered user packet definws the fields that are required for a
-   user who is not previously registered.  Already registered users will
-   not be able to register and password, username and emails checks will
-   be done here
+
+
 
 
 
@@ -169,13 +169,79 @@ Nuggent                      Standards Track                    [Page 3]
 RFC 1                            PRFC's                       March 2019
 
 
+2.2.  Transaction
+
+   This class is used to define information that may be required when
+   completing a transcation between the client and server.  Any
+   transaction related to the client, server and the bank will be
+   included in this packet.
+
+   class Transaction(PacketType): DEFINITION_IDENTIFIER =
+   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ("Token",
+   STRING), ("Bet", STRING), ("GameID", STRING) ]
+
+   Token: This field specifies the token received from the transaction
+   between the bank and the client Bet: This field specifies the bet
+   placed by the client GameID: This field specifies the game that the
+   client wish to play
+
+2.3.  Registered User
+
+   The Registered user packet definws the fields that are required for a
+   registered user to login in.
+
    class RegisteredUser(PacketType): DEFINITION_IDENTIFIER =
    "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [
    ("Email",STRING) ("Password",STRING) ]
 
+   Registered User: Email: This is the email address used login in.  A
+   check will be done as to whether it is stored in the database.  Pwd:
+   The password needs to have atleast 6 characters containing both
+   characters and numbers (atleast 1 character and 1 number).  It will
+   be checked whether matches the Email.
+
 2.4.  Error Handling
 
-   class ErrorHandling(PacketType): Body = [ ("Message",STRING) ]
+   This class is to define error handling packet which is sent to client
+   from server.
+
+   class ErrorHandling(PacketType): Body = [ ("Message",STRING)
+   ("ErrorCode", INT) ]
+
+   o  CODE - Can be set to 1,2,3,4,5,6
+
+   o
+
+      1.  Username already exists
+
+      2.  Invalid email address
+
+
+
+
+
+Nuggent                      Standards Track                    [Page 4]
+
+RFC 1                            PRFC's                       March 2019
+
+
+      3.  Passwords do not match
+
+      4.  Password invalid
+
+      5.  Invalid Amount
+
+      6.  Insufficient Balance
+
+2.5.  Data Packets
+
+   class DataPackets(PacketType): DEFINITION_IDENTIFIER =
+   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ]
+
+2.6.  Machine State
+
+   class MacineState(PacketType): DEFINITION_IDENTIFIER =
+   "NuggetFramework.type" DEFINITION_VERSION = "1.0" Body = [ ]
 
 
 Author's Address
@@ -210,17 +276,7 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-Nuggent                      Standards Track                    [Page 4]
+Nuggent                      Standards Track                    [Page 5]
 
 RFC 1                            PRFC's                       March 2019
 
@@ -276,7 +332,7 @@ Intellectual Property
 
 
 
-Nuggent                      Standards Track                    [Page 5]
+Nuggent                      Standards Track                    [Page 6]
 
 RFC 1                            PRFC's                       March 2019
 
@@ -332,5 +388,5 @@ RFC 1                            PRFC's                       March 2019
 
 
 
-Nuggent                      Standards Track                    [Page 6]
+Nuggent                      Standards Track                    [Page 7]
 
