@@ -45,7 +45,8 @@
 
 <rfc category="std" docName="draft_prfc" ipr="playgroundStd_v1_0" number="1">
     <front>
-
+            <title abbrev="PRFC's">Playground Request For Comments</title>
+            
     </front>
 
     <middle>
