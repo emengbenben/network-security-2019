@@ -207,16 +207,15 @@
       
       <t><list style="symbols">
         <t>CODE     - Can be set to 1,2,3,4,5,6</t>
-      <t>
-      <list style="numbers">
+      <t><list style="numbers">
         <t> Username already exists</t>
         <t> Invalid email address</t>
         <t> Passwords do not match</t>
         <t> Password invalid</t>
         <t> Invalid Amount</t>
         <t> Insufficient Balance</t>
-      </list>
-      </t>  
+      </list></t>
+      </list></t>  
       </section> 
       
       <section title="Data Packets"> 
