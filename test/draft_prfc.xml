@@ -43,7 +43,7 @@
 
 
 
-<rfc category="std" docName="rfc1" number="1">
+<rfc category="std" docName="draft_prfc" number="1">
  <!-- category values: std, bcp, info, exp, and historic
     ipr values: trust200902, noModificationTrust200902, noDerivativesTrust200902,
        or pre5378Trust200902, playgroundWinter201501
@@ -56,14 +56,14 @@
    <!-- The abbreviated title is used in the page header - it is only necessary if the 
         full title is longer than 39 characters -->
 
-   <title abbrev="PRFC's">GoNuts Client Server Framework</title>
+   <title abbrev="PRFC's">GoNuts Client Server Application Framework</title>
 
    <!-- add 'role="editor"' below for the editors if appropriate -->
 
    <!-- Another author who claims to be an editor -->
 
    <author fullname="Golden Nugget" initials="G.N." role="editor"
-           surname="Nuggent">
+           surname="Nugget">
      <organization>JHU Network Security Spring 2019</organization>
 
      <address>
@@ -119,14 +119,13 @@
 
  <middle>
    <section title="Introduction">
-     <t>The Golden Nugget Casino PRFC defines the client-server framework that will used by our company to receive the right data fields and also send the right fields to the users. It defines how the registration, login and game playing packets will be sent to and fro. </t>
-     <t>This document describes the packets and each of its fields along with their right data types.</t>
+     <t>The Golden Nugget Casino PRFC defines the client-server framework for the application layer which can be implemented by all the participants in the playground network. This PRFC will cover all the fields essential for every organization to designs its own client side of the application. This particular class structure is centered around our application, but we provide enough room to implement the same fields into your respective companies applications.</t>
    </section>
    
-   <section title="Functional Specifications">
+   <section title="PACKET SPECIFICATIONS">
    
      <section title="New User Packet">
-      <t>The new user packet definws the fields that are required for registering a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here.</t>
+      <t>The new user packet defines the fields that are required for registering a user who is not previously registered. Already registered users will not be able to register and password, username and emails checks will be done here.</t>
       <t>class NewUser(PacketType):</t>
         <t>    DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
         <t>    DEFINITION_VERSION = "1.0"</t>
@@ -138,29 +137,30 @@
         <t>    ]</t>
        
        <t>NewUser:</t>
-       <t>Email: This is the email address used for registering. A check will be done as to whether it is a legitimate email address or not using the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a check on the JHu email ID will be done.</t>
-       <t>Pwd: The password needs to have atleast 6 characters containing both characters and numbers (atleast 1 character and 1 number). This will be stored as a hash value.</t>
-       <t>Conf_Pwd: This is to confirm the password entered in the previous field. Both of these must match to validate the password. This will also be stored as a hadh value.</t>
-       <t>Company_Name: The name of the company must be mentioned aso we can keep a track of which user is currently playing and which company is earning more money so we can accordingly adjust game levels for each company separately.</t>
-
+       <t>Email: This is the email address used for registering. A check will be done as to whether it is a legitimate email address or not using the syntax- abc@jhu.edu where '@jhu.edu' is mandatory and a check on the JHU email ID will be done. We are implementing this verification because email is going to be the username to login to our applications. If you prefer to use an username instead, you are free to use an username in the email field.</t>
+       <t>Pwd: The password needs to have atleast 6 characters containing both characters and numbers (atleast 1 character and 1 number). This will be stored as a hash value on the server side. This ensures that the respective company employees cannot view the passwords that the users set for their account.</t>
+       <t>Conf_Pwd: This is to confirm the password entered in the previous field. Both of these must match to validate the password. This will also be stored as a hash value. To elaborate, the hash of the Pwd field will be computed and stored into a buffer PwdBuf[] and then the Conf_Pwd fields hash will be matched with PwdBuff[]. If there is a match and the email does not exist already the registration credentials are accepted or else the corresponding error codes will be sent to the client. </t>
+       <t>Company_Name: The name of the company must be mentioned aso we can keep a track of which user is currently playing and which company is earning more money so we can accordingly adjust game levels for each company separately. This field can be ustilized by your company for future analytics purposes.</t>
       </section>
       
       <section title="Transaction"> 
-      <t>This class is used to define information that may be required when completing a transcation between the client and server. Any transaction related to the client, server and the bank will be included in this packet.</t>
+      <t>This class is used to define information that will be required when verifying a transaction between the client and server. Any transaction related to the client, server and the bank will be included in this packet.</t>
  
       <t>   class Transaction(PacketType): </t>
       <t>      DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
       <t>      DEFINITION_VERSION = "1.0"</t>
       <t>      Body = [</t>
-      <t>          ("Token", STRING),</t>
-      <t>          ("Bet", STRING),</t>
+      <t>          ("Token_id", STRING),</t>
+      <t>          ("Bet", INT16),</t>
       <t>          ("GameID", STRING)</t>
+      <t>          ("Extra" INT16)</t>
       <t>      ]</t>
       
       <t>Transaction:</t>
-      <t>Token: This field specifies the token received from the transaction between the bank and the client.</t>
-      <t>Bet: This field specifies the bet placed by the client</t>
-      <t>GameID: This field specifies the game that the client wish to play.</t>
+      <t>Token_id: This field specifies the token received from the transaction between the bank and the client. This is synonymous to a reciept number which the bank will generate and company will trust in the backing authority that the reciept number is valid and the amount has been successfully transferred into our bank account.</t>
+      <t>Bet: This field specifies the bet placed by the client, this can also be used by companies in other forms for inputing money to be used.</t>
+      <t>GameID: This field specifies the game that the client wishes to play. This can be modified to the option that species the services the user wants to use</t>
+      <t>Extra: This is a field with the deault value set to NULL. It can be used to cater to any other transaction related implementations required by your company.</t>
       </section>  
       
       <section title="Registered User"> 
@@ -176,11 +176,11 @@
  
       <t>Registered User:</t>
       <t>Email: This is the email address used login in. A check will be done as to whether it is stored in the database.</t>
-      <t>Pwd: The password needs to have atleast 6 characters containing both characters and numbers (atleast 1 character and 1 number). It will be checked whether matches the Email.</t>
+      <t>Pwd: The hash of the input will be mattched to the hask of the packet stored and whether matches the corresponding Email ID. If not the resspective error will be thrown</t>
       </section>
      
       <section title="Error Handling"> 
-      <t>This class is to define error handling packet which is sent to client from server.</t>
+      <t>This class is to define error handling packet which is sent to client from server. The server will send the message and an error code too. It is the companiues choice to take the error code as input and send out the related error message or use the servers message directly. One other thing to note is that there might be other eroors that are specific to your applications, hence this class only species the most generic ones.</t>
       
       <t>class ErrorHandling(PacketType):</t>
       <t>     DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
@@ -191,7 +191,7 @@
       <t>     ]</t>
       
       <t><list style="symbols">
-        <t>CODE     - Can be set to 1,2,3,4,5,6</t>
+        <t>CODE     - Can be set to 1,2,3,4,5,6,7</t>
       <t><list style="numbers">
         <t> Username already exists</t>
         <t> Invalid email address</t>
@@ -199,44 +199,53 @@
         <t> Password invalid</t>
         <t> Invalid Amount</t>
         <t> Insufficient Balance</t>
+        <t> Invalid Reciept Number</t>
       </list></t>
       </list></t>  
       </section> 
       
       <section title="Data Packets"> 
-      <t>
-      <!--Write stuff here -->
-      </t>
-      <t>
-        class DataPackets(PacketType):
-             DEFINITION_IDENTIFIER = "NuggetFramework.type"
-             DEFINITION_VERSION = "1.0"
-             Body = [
-                 
-             ]
-      </t>
-      <t>
-      <!--Write stuff here -->
-      
-      </t>
+      <t>Unlike other packet types, this class will be used to only focus on the application related data. The data names we provided are meant to cater to our game needs but can also be used to implement other applications over these variables. We include Buffers, Strings and integers which should cover most of the data types to transmit data for your applications.</t>
+      <t>class DataPackets(PacketType):</t>
+      <t>       DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
+      <t>       DEFINITION_VERSION = "1.0"</t>
+      <t>       Body = [</t>
+      <t>           ("number", UInt16),</t>
+      <t>           ("Status", Char),</t>
+      <t>           ("choice", int),</t>
+      <t>           ("suitcase", buffer),</t>
+      <t>           ("M_offered", int),</t>
+      <t>           ("M_Won", int),</t>
+      <t>           ("data", string)</t>
+      <t>       ]</t>
+      <t>number: An integer type data</t>
+      <t>Status: A charactor type data</t>
+      <t>choice: An integer type data</t>
+      <t>suitcase: A buffer</t>
+      <t>M_offered: An Integer</t>
+      <t>M_Won: An Integer</t>
+      <t>data: A String</t>
       </section>
       
       <section title="Machine State"> 
       <t>
-      <!--Write stuff here -->
+      This class defines the structure for the variables to help keep track of the machine state. Machine state is a crucial class to ensure session is created and the users progress in the application is going to be tracked.
       </t>
-      <t>
-        class MacineState(PacketType):
-             DEFINITION_IDENTIFIER = "NuggetFramework.type"
-             DEFINITION_VERSION = "1.0"
-             Body = [
-                 
-             ]
-      </t>
-      <t>
-     <!--Write stuff here -->
-      
-      </t>
+      <t>class MacineState(PacketType):</t>
+             <t>DEFINITION_IDENTIFIER = "NuggetFramework.type"</t>
+             <t>DEFINITION_VERSION = "1.0"</t>
+             <t>Body = [</t>
+               <t>  ("state", string),</t>
+               <t>  ("session_id", int),</t>
+               <t>  ("Expire_time", timestamp),</t>
+               <t>  ("Login_time",timestamp),</t>
+               <t>  ("extra", string),</t>
+               <t> ]</t>
+      <t>State: It is a variable that is used to set the current state of the user as in LoggedIn, LoggedOut, etc..</t>
+      <t>Session_id: This is used to keep track of the users progress in the game and to keep the session running</t>
+      <t>Expire_time: Timestamp that is used to terminate the session after inactivity</t>
+      <t>Login_time: Timestamp used to record the login time</t>
+      <t>extra: This is provided to accomodate other machine state variables that may be required for the other games</t>
       </section>
        
    </section>
