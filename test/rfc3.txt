@@ -1,0 +1,1064 @@
+
+
+
+Network Working Group                                     G. Nugget, Ed.
+Request for Comments: 2                 JHU Network Security Spring 2019
+Category: Standards Track                                     March 2019
+
+
+                        GoNuts Delivery Protocol
+
+Abstract
+
+   This document describes the GoNuts Delivery Protocol (GDP).  This
+   protocol shall reliably transmit data over the network and also add a
+   layer of security to this data transmission.
+
+Status of this Memo
+
+   This document specifies a Playgrounds standards track protocol for
+   the Playground Experiment, and requests discussion and suggestions
+   for improvements.  Distribution of this memo is unlimited.
+
+Copyright Notice
+
+   Copyright (c) 2019 SETH JAMES NIELSON.  All rights reserved.
+
+   This document is used solely for educational purposes.  Any citations
+   within this document are also for educational purposes and also for
+   technical reference.  If any of these cited elements are protected
+   under copyright, their inclusion here falls under Fair Use
+   provisions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 1]
+
+RFC 2                              GDP                        March 2019
+
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1.  Overview . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.2.  Purpose  . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.3.  Requirements Language  . . . . . . . . . . . . . . . . . .  3
+   2.  Functional Specification . . . . . . . . . . . . . . . . . . .  3
+     2.1.  Nugget Descriptions  . . . . . . . . . . . . . . . . . . .  3
+     2.2.  Session Establishment  . . . . . . . . . . . . . . . . . .  6
+     2.3.  Session Termination  . . . . . . . . . . . . . . . . . . . 10
+     2.4.  Data Flow Diagram  . . . . . . . . . . . . . . . . . . . . 14
+     2.5.  Key Management . . . . . . . . . . . . . . . . . . . . . . 16
+     2.6.  Data Transmission  . . . . . . . . . . . . . . . . . . . . 16
+     2.7.  Error Handling . . . . . . . . . . . . . . . . . . . . . . 16
+     2.8.  States . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+   3.  Security Considerations  . . . . . . . . . . . . . . . . . . . 17
+   4.  Normative References . . . . . . . . . . . . . . . . . . . . . 17
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 17
+   Intellectual Property and Copyright Statements . . . . . . . . . . 18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 2]
+
+RFC 2                              GDP                        March 2019
+
+
+1.  Introduction
+
+1.1.  Overview
+
+   The GoNuts Delivery Protocol (GDP) is a connection-oriented protocol
+   that provides reliable transmission of data throughout the PLAYGROUND
+   system.  It provides secure and reliable nugget delivery over the
+   network.  It exists at the Layer 4 (transport layer) of the OSI
+   model.  The reliable transmission of data means that the data is in
+   order, reasonably error-free, and guaranteed to be delivered until
+   the meal is over.  The security of the nugget is achieved by using 3
+   flags - F,R and G which are used to set the mode of encryption by
+   which the data is sent.
+
+1.2.  Purpose
+
+   This memorandum describes the specification of the GDP and how to
+   implement it within the PLAYGROUND system.  It includes the
+   establishment of the meal as well as the transmission of the data.
+
+1.3.  Requirements Language
+
+   ServerSauce: indicates the digital cert from Server
+
+   ClientSauce: indicates the digital cert from Client
+
+   Nugget: indicates the packet
+
+   Meal: indicates the session
+
+   MealTicket: indicates the session.id
+
+   SauceFactory: repository that contains digital certs from the server
+   and the client
+
+
+2.  Functional Specification
+
+2.1.  Nugget Descriptions
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 3]
+
+RFC 2                              GDP                        March 2019
+
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   |                         Sequence Number                       |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   |                       Acknowledgment Number                   |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data  |       | | | |P|F|R|A|S|                               |
+   |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum            |
+   |       |       | | | |H|N|T|K|N|                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                               |               |
+   |                    Options                    |    Padding    |
+   |                                               |               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   |                              data                             |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   A "nugget" is defined as a nugget in GDP.  The following list defines
+   the data types used for fields within a nugget:
+
+      BOOL: a boolean data type; has a value of true or false
+
+      BUFFER: a sequence of bytes
+
+      UINT32: an unsigned 32-bit integer
+
+      UINT6: an unsigned 6-bit integer
+
+      UINT4: an unsigned 4-bit integer
+
+      LIST(UINT64): a list of multiple UINT64's
+
+   Below is the composition of a GDP nugget and the definition for each
+   field.  Note that some fields within this nugget have similar
+   definitions to the fields in a Transmission Control Protocol (TCP)
+   nugget as defined in RFC 793 [RFC0793].
+
+   GDP Nugget
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 4]
+
+RFC 2                              GDP                        March 2019
+
+
+      ("seqNumber", UINT32),
+
+      ("ackNumber", UINT32),
+
+      ("dataOffset", LIST(UINT4)),
+
+      ("reserve", UINT6),
+
+      ("dataSegment", BUFFER)
+
+      ("FFlag", BOOL),
+
+      ("RFlag", BOOL),
+
+      ("GFlag", BOOL),
+
+      ("pshFlag", BOOL),
+
+      ("rstFlag", BOOL),
+
+      ("finFlag", BOOL),
+
+      ("synFlag", BOOL),
+
+      ("ackFlag", BOOL),
+
+   seqNumber: The sequence number of the nugget.
+
+   ackNumber: The acknowledgement number of the nugget.
+
+   dataOffset: sets the offset for the nugget
+
+   dataSegment: The data being transmitted in the nugget
+
+   FFlag: The flag to set AES
+
+   RFlag: The flag to set twoFish
+
+   GFlag: The flag to set threeFish
+
+   synFlag: The flag to synchronize sequence numbers.
+
+   ackFlag: The flag to acknowledge an accepted transmission.
+
+   finFlag: The flag indicating that there is no more data from the
+   sender; it is also used at the time of session termination.
+
+   pshFlag: The flag to indicate that data is to be pushed through from
+
+
+
+Nugget                       Standards Track                    [Page 5]
+
+RFC 2                              GDP                        March 2019
+
+
+   the sender to the receiver.
+
+   rstFlag: The flag to indicate a reset of the connection.
+
+   reserve: It is to add any other fields that we need in the nugget.
+   It is an address space to expand any of the other components of the
+   nugget
+
+2.2.  Session Establishment
+
+   To establish a meal, the GDP shall use a four-way handshake, namely
+   (1) SYN, (2) SYN+ACK, (3) ACK_Client, and (4)Ack_Server.
+
+   1.  A client node sends a SYN nugget over an IP network to a server.
+   The objective of this nugget is to request if the server is open for
+   new connections.
+
+   2.  The target server must have open ports that can accept and
+   initiate new connections.  When the server receives the SYN nugget
+   from the client node, it responds and returns a SYN+ACK nugget with
+   F, R, G flag set to the encryption libraries available with the
+   server.  In the example below the SYN+ACK nugget has the F|R|G set to
+   111 which implies that the server has all the three excryption
+   libraries to use for the data transmission.  The data of this nugget
+   will include MealTicket which is Sequence number of SYN nugget +
+   nounce, which is work like a session id.  The body will also include
+   the ServerSauce, which is a digital certificate of the server.
+
+   3.  The client node receives the SYN+ACK nugget from the server and
+   responds with a Ack_Client nugget and selects one of the encryption
+   schemes that the server mentioned.  In this example the client send
+   the FFlag set to 1, which implies that the client wants to use AES
+   Encryption libraries.  The data of this nugget will include the same
+   MealTicket given by the server in the previous nugget as well as the
+   ClientSauce which will be the Digital Certificate to verify the
+   client.  Along with the above parameters the data also includes a
+   MasterKey that the client generates.
+
+   4.  Now the target server receives the acknowledgement nugget
+   ACK_Client from the client node and then sends back an ACK nugget
+   Ack_Server and in the data of this nugget will be the Digest which
+   will contain the key for all the communication and this key will key
+   will be derieved from the master key using any algorithm the server
+   wishes to use.  This Digest will be encrypted using the ClientSauce
+   key.  Upon completion of this process, the connection is created and
+   the host and server can communicate.
+
+   Note that the initial sequence number for the sender and receiver is
+
+
+
+Nugget                       Standards Track                    [Page 6]
+
+RFC 2                              GDP                        March 2019
+
+
+   generated randomly to ensure that the number is not being used within
+   an existing connection.
+
+   SYN Nugget
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                       Sequence Number = A                     |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                    Acknowledgment Number = 0                  |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|       Checksum =              |
+       |       |       | | | |H|N|T|K|N|       tcp_cal_chksum()        |
+       |       |       |0|0|0|0|0|0|0|1|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                              data                             |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   SYN+ACK Nugget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 7]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                        Sequence Number = B                    |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                   Acknowledgment Number = A + 1               |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum =          |
+       |       |       | | | |H|N|T|K|N|       tcp_cal_chksum()        |
+       |       |       |1|1|1|0|0|0|1|1|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |              data = MealTicket + ServerSauce                  |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   ACK_Client Nugget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 8]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                     Sequence Number = A + 1                   |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                 Acknowledgment Number = B + 1                 |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum =          |
+       |       |       | | | |H|N|T|K|N|       tcp_cal_chksum()        |
+       |       |       |1|0|0|0|0|0|1|0|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |          data = MealTicket + ClientSauce  + MasterKey         |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   ACK_Server Nugget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                    [Page 9]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                    Sequence Number = B + 1                    |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                 Acknowledgment Number = A + 2                 |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum =          |
+       |       |       | | | |H|N|T|K|N|       tcp_cal_chksum()        |
+       |       |       |1|0|0|0|0|0|1|0|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |              data = MealTicket + digest                       |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+2.3.  Session Termination
+
+   A session begins closing when either the sender sends a [FIN] nugget.
+   The reciever must send an [ACK] nugget for this.  This is one-way
+   meal termination.  To complete the meal termination process, the
+   receiver must send a [FIN] nugget and the sender must send an [ACK]
+   nugget as well.  This is how the meal termination takes place.  In
+   all the [FIN] nuggets, the finFlag is set to 1.
+
+   After the sender transmits a nugget with a finFlag, it waits on a
+   response from the receiver.  The receiver successfully accepts the
+   nugget.  The receiver then transmits a nugget with the finFlag and
+   ackFlag set, to the sender.  The receiver waits for a response from
+   the sender.  The sender receives the nugget.  After sending the
+   receiver a nugget with the finFlag and ackFlag, the sender closes its
+   connection.  When the receiver obtains the nugget (with the finFlag
+   and ackFlag), it closes its connection.  At this point, the meal is
+   terminated.
+
+   FIN_Client Nugget
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 10]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                         Sequence Number                       |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                       Acknowledgment Number                   |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum = tcp      |
+       |       |       | | | |H|N|T|K|N|                               |
+       |       |       |0|0|0|0|1|0|0|0|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                    data = MealTicket                          |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   ACK_Server Nugget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 11]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                         Sequence Number                       |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                       Acknowledgment Number                   |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum =          |
+       |       |       | | | |H|N|T|K|N|       tcp_cal_chksum()        |
+       |       |       |0|0|0|0|1|0|1|0|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |              data = MealTicket + digests                      |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   FIN_Server Nugget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 12]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                         Sequence Number                       |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                       Acknowledgment Number                   |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum            |
+       |       |       | | | |H|N|T|K|N|                               |
+       |       |       |0|0|0|0|1|0|1|0|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                              data(none)                       |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   ACK_Client Nugget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 13]
+
+RFC 2                              GDP                        March 2019
+
+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                         Sequence Number                       |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |                       Acknowledgment Number                   |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Data  |       | | | |P|F|R|A|S|                               |
+       |Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum =          |
+       |       |       | | | |H|N|T|K|N|       tcp_cal_chksum()        |
+       |       |       |0|0|0|0|1|0|1|0|                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                               |               |
+       |                    Options                    |    Padding    |
+       |                                               |               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                                                               |
+       |               data = MealTicket + ClientSauce                 |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+2.4.  Data Flow Diagram
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 14]
+
+RFC 2                              GDP                        March 2019
+
+
+   client                                   server
+      +                                       +
+      |                                       |
+      +------------------+                    |
+      |                   \SYN                |
+      |                    +----------------->+
+      |                                       |
+      |       [MealTicket] +------------------+
+      |       ServerSauce / [SYN+ACK](F,R,G)  |
+      +<-----------------+                    |
+      |                                       |
+      +----------------------+                |
+      |          [MealTicket] \ [ACK](F|R|G)  |
+      |  ClientSauce+MasterKey +------------->+
+      |                                       |
+      |                    +------------------+
+      |          (Digest) / [ACK]             |
+      +<-----------------+                    |
+      |                                       |
+      |                                       |
+      |        [MEAL]Session Established      |
+      +-------------------------------------->+
+      |                                       |
+      |             DATA TRANSFER             |
+      |                                       |
+      +<--------------------------------------+
+      |                                       |
+      |                                       |
+      +------------------+                    |
+      |                   \ [FIN]             |
+      |                    +----------------->+
+      |                                       |
+      |                    +------------------+
+      |             [ACK] /                   |
+      +<-----------------+ +------------------+
+      |             [FIN] /                   |
+      +<-----------------+                    |
+      |                                       |
+      +------------------+                    |
+      |                   \ [ACK]             |
+      |                    +----------------->+
+      |                                       |
+      |           Session Terminated          |
+      |                                       |
+      +                                       +
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 15]
+
+RFC 2                              GDP                        March 2019
+
+
+2.5.  Key Management
+
+   As you have realised we are using Sauce's as a simpler derivation of
+   Digital Certificate to validate both the client and the Server.  The
+   proposed architecture for this is as follows:
+
+   1.  Golden Nugget will create a Repository called "The Sauce Factory"
+       in which Dr.Seth Neilson and Karan will also be the
+       collaborators.
+
+   2.  Each Company head will recieve a template to make their Sauce
+
+   3.  Company's will have have to generate their ServerSauce and each
+       members ClientSauce and upload it to the repository
+
+   4.  Now this replicates how digital certificates work in real world
+       communications
+
+2.6.  Data Transmission
+
+   Once the MEAL is established the data transmission will start from
+   both the peers connected to the session.  Each nugget will have a
+   Sequence number and an acknowledgement number set, the sequence
+   number to specify where in the stream the nugget is, and the
+   acknowledge number which signifies the number of bytes received.
+   Both numbers are offset by the starting sequence number.
+
+2.7.  Error Handling
+
+   Error handling in GDP is mainly done through use of two techniques.
+   They are checksum and retransmission.  Every nugget contains a
+   checksum field in which is used to find corrupted nugget.  If the
+   nugget is corrupted, then that nugget is discarded.  When a nugget is
+   missing, delayed to deliver to receiver, or corrupted when it is
+   checked by receiver, then that segment is retransmitted again.
+
+2.8.  States
+
+   In the GDP, the connection goes through various states.  Note that
+   each event triggers the movement from one state to another.  Change
+   of state is caused by user input, any flags or nugget drops.
+
+   The states and their descriptions are:
+
+   1.  LISTEN: waiting for a connection request
+
+   2.  SYN-SENT: waiting for a response after having sent a connection
+       request
+
+
+
+Nugget                       Standards Track                   [Page 16]
+
+RFC 2                              GDP                        March 2019
+
+
+   3.  SYN-RECEIVED: waiting for a connection request acknowledgment
+       after having both received a response and sent a connection
+       request
+
+   4.  ESTABLISHED: a connection that allows the transfer of data to the
+       user
+
+   5.  FIN-WAIT-1: When the [FIN] nugget has been sent to the server,
+       client goes to this state
+
+   6.  FIN-WAIT-2: Wneh server has sent the acknowledgment for the
+       received [FIN] and is ready to send the [FIN] nugget to the
+       client, it is in this state; When the server has sent the
+       acknowledgemnt and the [FIN] nugget, this state is achieved
+
+   7.  CLOSED: represents a closed connection state
+
+
+3.  Security Considerations
+
+   The GDP seeks to transport data reliably over the network by
+   implement security at the TCP layer.
+
+   Some potential attacks against the GDP include: insider threat and
+   denial of service attacks.  The GDP is susceptible to denial of
+   service attacks through the flooding of synFlag nuggets.  Insider
+   threat can be mitigated by access control and logging.
+
+
+4.  Normative References
+
+   [RFC0793]  Postel, J., "Transmission Control Protocol", STD 7,
+              RFC 793, DOI 10.17487/RFC0793, September 1981,
+              <https://www.rfc-editor.org/info/rfc793>.
+
+
+Author's Address
+
+   Golden Nugget (editor)
+   JHU Network Security Spring 2019
+   JHU Malone MSSI Lab
+   Baltimore, MD  21218
+   USA
+
+   Phone: +1 123-456-7891
+   Email: golden_nugget@jhu.edu
+
+
+
+
+
+Nugget                       Standards Track                   [Page 17]
+
+RFC 2                              GDP                        March 2019
+
+
+Full Copyright Statement
+
+   Copyright (C) Seth James Nielson (2019).  All Rights Reserved.
+
+   This document and translations of it may be copied and furnished to
+   others, and derivative works that comment on or otherwise explain it
+   or assist in its implementation may be prepared, copied, published
+   and distributed, in whole or in part, without restriction of any
+   kind, provided that the above copyright notice and this paragraph are
+   included on all such copies and derivative works.  However, this
+   document itself may not be modified in any way, such as by removing
+   the copyright notice or references to the PLAYGROUND experiment or
+   other associated organizations, except by explicit permission.
+
+   The limited permissions granted above are perpetual and will not be
+   revoked by SETH JAMES NIELSON or his successors or assigns.
+
+   This document and the information contained herein is provided on an
+   "AS IS" basis and SETH JAMES NIELSON and associated academic
+   institutions DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Intellectual Property
+
+   The PLAYGROUND framework and student submissions for PLAYGROUND are
+   intended to be free of any intellectual property conflicts.  All
+   submitting parties, especially students, are not allowed to submit
+   source code, specifications, or other components that are known to be
+   protected by copyright, patents, or other IP mechanisms.  Students
+   submitting creative content grant shared rights and ownership of
+   their content to the PLAYGROUND project.  Specifically, any
+   submission can be used in future educational settings including
+   subsequent PLAYGROUND experiments.
+
+   Any interested party is invited to bring to the experiment director's
+   attention any copyrights, patents or patent applications, or other
+   proprietary rights which may cover technology that may be currently
+   in use without permission.
+
+   It should be noted that these statements have not been reviewed by
+   legal counsel.  Moreover, the academic institutions at which
+   PLAYGROUND experiments take place may have additional or even
+   conflicting copyright and intellectual property rules.  Accordingly,
+   concerned parties may need to contact their own lawyer and/or
+   resources at their institution to understand the rights and
+
+
+
+Nugget                       Standards Track                   [Page 18]
+
+RFC 2                              GDP                        March 2019
+
+
+   limitations associated with code donated to a PLAYGROUND experiment.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nugget                       Standards Track                   [Page 19]
+
