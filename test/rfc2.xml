@@ -290,7 +290,7 @@
       |                              data                             |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      ]]></artwork></figure></t>
+		  ]]></artwork></figure></t>
        
       <t>SYN+ACK Nugget</t>
       <t><figure><artwork><![CDATA[
@@ -553,10 +553,12 @@ client                                   server
 ]]></artwork></figure></t>  
 </section>
 			<section title="Key Management">
-        <t>As you have realised we are using Sauce's as a form of Digital Certificate to validate both the client and the Server. The proposed architecture for this is as follows:</t>
+        <t>As you have realised we are using Sauce's as a simpler derivation of Digital Certificate to validate both the client and the Server. The proposed architecture for this is as follows:</t>
          <t><list style="numbers">
            <t>Golden Nugget will create a Repository called "The Sauce Factory" in which Prof.Seth Nelson and Karan will also be the collaborators.</t>
-           <t>Each Company head will recieve a </t>
+           <t>Each Company head will recieve a template to make their Sauce</t>
+           <t>Company's will have have to generate their ServerSauce and each members ClientSauce and upload it to the repository</t>
+           <t>Now this replicates how digital certificates work in real world communications</t>
            </list></t>
      </section>
      <section title="Data Transmission">
@@ -603,12 +605,9 @@ client                                   server
          <t>SYN-RECEIVED: waiting for a connection request acknowledgment after having
          both received a response and sent a connection request</t>
          <t>ESTABLISHED:  a connection that allows the transfer of data to the user</t>
-         <t>FIN-WAIT-1: When the [FIN] nugget has been sent to the server, client goes to thsi state</t>
-         <t>FIN-REC: Received [FIN] nugget from the other side (on Server side)</t>
-         <t>ACK-RECV-1: Received acknowledgment from the server side to the client side </t>
-         <t>FIN-INIT-2: Ready to send [FIN] nugget to client</t> 
-         <t>FIN-RECV-2: Received [FIN] nugget from the other server (on Client side)</t>
-         <t>ACK-RECV-2: Received acknowledgement from the client side to the server side </t>
+         <t>FIN-WAIT-1: When the [FIN] nugget has been sent to the server, client goes to this state</t>
+         <t>FIN-WAIT-2: Wneh server has sent the acknowledgment for the received [FIN] and is ready to send the [FIN] nugget to the client, it is in this state; When the server has sent the acknowledgemnt and the [FIN] nugget,
+         this state is achieved </t>
          <t>CLOSED:  represents a closed connection state </t>
        </list></t>
      </section>
@@ -617,12 +616,8 @@ client                                   server
    <section title="Security Considerations">
      <t>The GDP seeks to transport data reliably over the network by implement security at the TCP layer.</t>
      
-     <t>Some potential attacks against the GDP include: insider threat, data confidentiality and denial of service
-     attacks. An insider threat can be minimized through access control, security policies, and separating
-     services. To combat threats to confidentiality, one suggestion is to encrypt the data at a
-     higher layer of the OSI model before the data is added to the packet. The CDP is susceptible
-     to denial of service attacks through the flooding of synFlag packets. Security mechanisms
-     implemented at other levels of the OSI model can aid in mitigating this type of attack.</t>
+     <t>Some potential attacks against the GDP include: insider threat, TCP Replay and denial of service
+     attacks. The GDP is susceptible to denial of service attacks through the flooding of synFlag packets. </t>
    </section>
 
  </middle>
