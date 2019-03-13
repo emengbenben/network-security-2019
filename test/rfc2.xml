@@ -480,11 +480,11 @@
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                         Sequence Number     		      |
+      |                         Sequence Number                       |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
       |                                                               |
-      |                       Acknowledgment Number        	      |
+      |                       Acknowledgment Number                   |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       | Data  |       | | | |P|F|R|A|S|                               |
@@ -518,7 +518,7 @@ client                                   server
    |                                       |
    +----------------------+                |
    |          [MealTicket] \ [ACK](F|R|G)  |
-   | 	ClientSauce+MasterKey +------------->+
+   |  ClientSauce+MasterKey +------------->+
    |                                       |
    |                    +------------------+
    |          (Digest) / [ACK]             |
@@ -556,7 +556,7 @@ client                                   server
         <t>As you have realised we are using Sauce's as a form of Digital Certificate to validate both the client and the Server. The proposed architecture for this is as follows:</t>
          <t><list style="numbers">
            <t>Golden Nugget will create a Repository called "The Sauce Factory" in which Prof.Seth Nelson and Karan will also be the collaborators.</t>
-           <t>Each Company head will </t>
+           <t>Each Company head will recieve a </t>
            </list></t>
      </section>
      <section title="Data Transmission">
@@ -603,8 +603,8 @@ client                                   server
          <t>SYN-RECEIVED: waiting for a connection request acknowledgment after having
          both received a response and sent a connection request</t>
          <t>ESTABLISHED:  a connection that allows the transfer of data to the user</t>
-         <t>FIN-WAIT-1: Ready to send the [FIN] nugget (to Server side)</t>
-         <t>FIN-RECV-1: Received [FIN] nugget from the other side (on Server side)</t>
+         <t>FIN-WAIT-1: When the [FIN] nugget has been sent to the server, client goes to thsi state</t>
+         <t>FIN-REC: Received [FIN] nugget from the other side (on Server side)</t>
          <t>ACK-RECV-1: Received acknowledgment from the server side to the client side </t>
          <t>FIN-INIT-2: Ready to send [FIN] nugget to client</t> 
          <t>FIN-RECV-2: Received [FIN] nugget from the other server (on Client side)</t>
