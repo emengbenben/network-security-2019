@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+sion="1.0" encoding="US-ASCII"?>
 <!-- This template is modified by Seth Nielson for creating P-RFC's
     (Playground-RFC's). -->
 <!-- This template is for creating an Internet Draft using xml2rfc,
@@ -160,6 +160,32 @@
    <section title="Functional Specification">
 
      <section title="Packet Descriptions">
+  
+ <t><figure><artwork><![CDATA[      
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                         Sequence Number                       |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                       Acknowledgment Number                   |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Data  |       | | | |P|F|R|A|S|                               |
+|Offset |Reserve|F|R|G|S|I|S|C|Y|           Checksum            |
+|       |       | | | |H|N|T|K|N|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                               |               |
+|                    Options                    |    Padding    |
+|                                               |               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                              data                             |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ ]]></artwork></figure></t>
        <t>A "nugget" is defined as a packet in GDP. The following list defines
        the data types used for fields within a nugget:</t>
 	     <t><list style="empty">
@@ -220,21 +246,26 @@
        <t>reserve: It is to add any other fields that we need in the nugget. It is an address space to expand any of the other components of the nugget</t>
      </section>
 
-     <section title="Session Establishment">
-       <t>To establish a meal, the GDP shall use a four-way handshake, namely (1) SYN, (2) SYN+ACK, (3) ACK_Client, and (4)Ack_Server.
-        A client node sends a SYN nugget over an IP network to a server. The objective of this nugget is to request if the server is open for new connections. 
-				The target server must have open ports that can accept and initiat new connections. When the server receives the SYN nugget from the client node, it responds and returns a SYN+ACK nugget
+     
+    <section title="Session Establishment">
+       <t>To establish a meal, the GDP shall use a four-way handshake, namely (1) SYN, (2) SYN+ACK, (3) ACK_Client, and (4)Ack_Server.</t>
+        <t> 1. A client node sends a SYN nugget over an IP network to a server. The objective of this nugget is to request if the server is open for new connections.</t>
+				<t> 2. The target server must have open ports that can accept and initiate new connections. When the server receives the SYN nugget from the client node, it responds and returns a SYN+ACK nugget
         with F, R, G flag set to the encryption libraries available with the server. In the example below the SYN+ACK packet has the F|R|G set to 111 which implies that the server
-        has all the three excryption libraries to use for the data transmission. 
-				The client node receives the SYN+ACK nugget from the server and responds with a Ack_Client nugget and selects one of the encryption schemes that the server mentioned.
-        In this example the client send the FFlag set to 1, which implies that the client wants to use AES Encryption libraries. 
-				Now the target server receives the acknowledgement nugget ACK_Client from the client node and then sends back an ACK nugget Ack_Server and in the body of this packet will be the   
+          has all the three excryption libraries to use for the data transmission. The data of this packet will include MealTicket which is Sequence number of SYN packet + nounce, which is work like a session id.
+       The body will also include the ServerSauce, which is a digital certificate of the server.</t>
+				<t> 3. The client node receives the SYN+ACK nugget from the server and responds with a Ack_Client nugget and selects one of the encryption schemes that the server mentioned.
+        In this example the client send the FFlag set to 1, which implies that the client wants to use AES Encryption libraries. The data of this packet will include the same MealTicket given by the server in the previous packet
+       as well as the ClientSauce which will be the Digital Certificate to verify the client. Along with the above parameters the data also includes a MasterKey that the client generates.</t>
+				<t> 4. Now the target server receives the acknowledgement nugget ACK_Client from the client node and then sends back an ACK nugget Ack_Server and in the data of this packet will be the
+          Digest which will contain the key for all the communication and this key will key will be derieved from the master key using any algorithm the server wishes to use. This Digest will be encrypted using the ClientSauce key.
         Upon completion of this process, the connection is created and the host and server can communicate.</t>
 
        <t> Note that the initial sequence number for the sender and receiver is generated
        randomly to ensure that the number is not being used within an existing connection.</t>
        
        <t>SYN Nugget</t>
+       <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -259,8 +290,10 @@
       |                              data                             |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+		  ]]></artwork></figure></t>
        
       <t>SYN+ACK Nugget</t>
+      <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -269,7 +302,7 @@
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                       Acknowledgment Number = A + 1           |
+      |                   Acknowledgment Number = A + 1               |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       | Data  |       | | | |P|F|R|A|S|                               |
@@ -285,17 +318,19 @@
       |              data = MealTicket + ServerSauce                  |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      ]]></artwork></figure></t>
        
       <t>ACK_Client Nugget</t>
+      <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                         Sequence Number = A + 1               |
+      |                     Sequence Number = A + 1                   |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                       Acknowledgment Number = B + 1           |
+      |                 Acknowledgment Number = B + 1                 |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       | Data  |       | | | |P|F|R|A|S|                               |
@@ -308,20 +343,22 @@
       |                                               |               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |              data = MealTicket + ClientSauce                  |
+      |          data = MealTicket + ClientSauce  + MasterKey         |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+		  ]]></artwork></figure></t>
        
        <t>ACK_Server Nugget</t>
+			 <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                         Sequence Number = B + 1               |
+      |                    Sequence Number = B + 1                    |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                       Acknowledgment Number = A + 2           |
+      |                 Acknowledgment Number = A + 2                 |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       | Data  |       | | | |P|F|R|A|S|                               |
@@ -334,9 +371,11 @@
       |                                               |               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |              data = MealTicket + digests                      |
+      |              data = MealTicket + digest                       |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+		  ]]></artwork></figure></t>
+
      </section>
 
      <section title="Session Termination">
@@ -355,6 +394,7 @@
        the meal is terminated.</t>
        
       <t>FIN_Client Nugget</t>
+      <t><figure><artwork><![CDATA[ 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -379,8 +419,9 @@
       |                    data = MealTicket                          |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       
+      ]]></artwork></figure></t>
       <t>ACK_Server Nugget</t>
+      <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -405,8 +446,9 @@
       |              data = MealTicket + digests                      |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       
+      ]]></artwork></figure></t>
       <t>FIN_Server Nugget</t>
+      <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -431,8 +473,9 @@
       |                              data(none)                       |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       
+      ]]></artwork></figure></t>
        <t>ACK_Client Nugget</t>
+      <t><figure><artwork><![CDATA[
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -457,12 +500,64 @@
       |               data = MealTicket + ClientSauce                 |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       
+			]]></artwork></figure></t>
      </section>
-     <section title = "Data Flow Diagram"> 
-       <t> NITHIN WILL ADD STUFF HERE </t>
+     
+<section title = "Data Flow Diagram"> 
+       <t><figure><artwork><![CDATA[     
+client                                   server
+   +                                       +
+   |                                       |
+   +------------------+                    |
+   |                   \SYN                |
+   |                    +----------------->+
+   |                                       |
+   |       [MealTicket] +------------------+
+   |       ServerSauce / [SYN+ACK](F,R,G)  |
+   +<-----------------+                    |
+   |                                       |
+   +----------------------+                |
+   |          [MealTicket] \ [ACK](F|R|G)  |
+   | 	ClientSauce+MasterKey +------------->+
+   |                                       |
+   |                    +------------------+
+   |          (Digest) / [ACK]             |
+   +<-----------------+                    |
+   |                                       |
+   |                                       |
+   |        [MEAL]Session Established      |
+   +-------------------------------------->+
+   |                                       |
+   |             DATA TRANSFER             |
+   |                                       |
+   +<--------------------------------------+
+   |                                       |
+   |                                       |
+   +------------------+                    |
+   |                   \ [FIN]             |
+   |                    +----------------->+
+   |                                       |
+   |                    +------------------+
+   |             [ACK] /                   |
+   +<-----------------+ +------------------+
+   |             [FIN] /                   |
+   +<-----------------+                    |
+   |                                       |
+   +------------------+                    |
+   |                   \ [ACK]             |
+   |                    +----------------->+
+   |                                       |
+   |           Session Terminated          |
+   |                                       |
+   +                                       +
+]]></artwork></figure></t>  
+</section>
+			<section title="Key Management">
+        <t>As you have realised we are using Sauce's as a form of Digital Certificate to validate both the client and the Server. The proposed architecture for this is as follows:</t>
+         <t><list style="numbers">
+           
+           </list></t>
      </section>
-
      <section title="Data Transmission">
        <t>Data transmission in the CDP is byte-oriented and occurs after a connection
        has been established. It will pass the data to the next appropriate higher OSI
@@ -490,31 +585,30 @@
      </section>
 
      <section title="Error Handling">
-       <t>Error handling in .</t>
-       
-       <t>In addition, the use of synNumber and ackNumber aid in the handling of errors. The
-       synNumber allows the receiver to discard any duplicate packets, while the ackNumber
-       enables the sender to know what packets need to be retransmitted. The sender will wait
-       a considerable amount of time to allow the packet to be accepted by the receiver. If
-       the receiver does not obtain the packet by the end of this time, the sender will assume
-       that the packet was lost and will transmit that packet again to the receiver.</t>
+       <t>Error handling in GDP is mainly done through use of two techniques. They are checksum and retransmission.
+       Every nugget contains a checksum field in which is used to find corrupted nugget. If the nugget is corrupted, then that nugget is discarded. 
+       When a nugget is missing, delayed to deliver to receiver, or corrupted when it is checked by receiver, then that segment is retransmitted again.</t>
      </section>
 
      <section title="States">
        <t>In the GDP, the connection goes through various states. Note that each event
-       triggers the movement from one state to another. Change of state is caused by user input, any flags </t>
+       triggers the movement from one state to another. Change of state is caused by user input, any flags or nugget drops. </t>
        
        <t>The states and their descriptions are: </t>
 	     <t><list style="numbers">
          <t>LISTEN:  waiting for a connection request</t>
-         <t>SYN-SENT:  waiting for a matching connection request after having sent a connection
+         <t>SYN-SENT:  waiting for a response after having sent a connection
          request</t>
-         <t>SYN-RECEIVED:  waiting for a confirming connection request acknowledgment after having
-         both received and sent a connection request</t>
-         <t>ESTABLISHED:  an open connection that allows the transfer of data to the user</t>
-         <t>FIN-WAIT-1:  waiting for a connection termination request from the remote CDP, or an
-         acknowledgment of the connection termination request previously sent</t>
-         <t>FIN-WAIT-2:  waiting for a connection termination request from the remote CDP</t>
+         <t>SYN-RECEIVED: waiting for a connection request acknowledgment after having
+         both received a response and sent a connection request</t>
+         <t>ESTABLISHED:  a connection that allows the transfer of data to the user</t>
+         <t>FIN-INIT-1: Ready to send the [FIN] nugget (on Client side)</t>
+         <t>FIN-RECV-1: Received [FIN] nugget from the other side (on Server side)</t>
+         <t>FIN-WAIT-1: waiting for a [FIN-ACK] nugget from the server side to the client side</t>
+         <t>ACK-RECV-1: Received acknowledgment from the server side to the client side </t>
+         <t>FIN-INIT-2: Ready to send [FIN] nugget to client</t> 
+         <t>FIN-RECV-2: Received [FIN] nugget from the other server (on Client side)</t>
+         <t>FIN-WAIT-2:  waiting for a [FIN-ACK] nugget from the client side to the server side </t>
          <t>CLOSE-WAIT:  waiting for a connection termination request from the local user</t>
          <t>CLOSING:  represents waiting for a connection termination request acknowledgment from
          the remote CDP</t>
@@ -524,17 +618,13 @@
          <t>CLOSED:  represents no connection state at all</t>
        </list></t>
      </section>
-   </section>
+         </section>
    
    <section title="Security Considerations">
      <t>The GDP seeks to transport data reliably over the network by implement security at the TCP layer.</t>
      
-     <t>As identified in section 2.1 in <xref target="RFC2360">RFC 2360</xref>, threats to security
-     come from multiple sources. Some potential
-     attacks against the GDP include: insider threat, data confidentiality and denial of service
-     attacks.</t>
-     
-     <t>An insider threat can be minimized through access control, security policies, and separating
+     <t>Some potential attacks against the GDP include: insider threat, data confidentiality and denial of service
+     attacks. An insider threat can be minimized through access control, security policies, and separating
      services. To combat threats to confidentiality, one suggestion is to encrypt the data at a
      higher layer of the OSI model before the data is added to the packet. The CDP is susceptible
      to denial of service attacks through the flooding of synFlag packets. Security mechanisms
@@ -561,12 +651,7 @@
 
    <references title="Normative References">
      <!--?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
-     &RFC2119;
-     
-     &RFC2360;
-     
      &RFC0793;
-
      <!--&PRFC001;-->
    </references>
 
