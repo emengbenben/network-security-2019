@@ -1,4 +1,4 @@
-sion="1.0" encoding="US-ASCII"?>
+<?xml version="1.0" encoding="US-ASCII"?>
 <!-- This template is modified by Seth Nielson for creating P-RFC's
     (Playground-RFC's). -->
 <!-- This template is for creating an Internet Draft using xml2rfc,
@@ -555,7 +555,7 @@ client                                   server
 			<section title="Key Management">
         <t>As you have realised we are using Sauce's as a form of Digital Certificate to validate both the client and the Server. The proposed architecture for this is as follows:</t>
          <t><list style="numbers">
-           
+           <t>Golden Nugget will create a Repository called "The Sauce Factory" which </t>
            </list></t>
      </section>
      <section title="Data Transmission">
@@ -604,18 +604,11 @@ client                                   server
          <t>ESTABLISHED:  a connection that allows the transfer of data to the user</t>
          <t>FIN-INIT-1: Ready to send the [FIN] nugget (on Client side)</t>
          <t>FIN-RECV-1: Received [FIN] nugget from the other side (on Server side)</t>
-         <t>FIN-WAIT-1: waiting for a [FIN-ACK] nugget from the server side to the client side</t>
          <t>ACK-RECV-1: Received acknowledgment from the server side to the client side </t>
          <t>FIN-INIT-2: Ready to send [FIN] nugget to client</t> 
          <t>FIN-RECV-2: Received [FIN] nugget from the other server (on Client side)</t>
          <t>FIN-WAIT-2:  waiting for a [FIN-ACK] nugget from the client side to the server side </t>
-         <t>CLOSE-WAIT:  waiting for a connection termination request from the local user</t>
-         <t>CLOSING:  represents waiting for a connection termination request acknowledgment from
-         the remote CDP</t>
-         <t>LAST-ACK:  represents waiting for an acknowledgment of the connection termination request
-         previously sent to the remote CDP (which includes an acknowledgment of its connection
-         termination request)</t>
-         <t>CLOSED:  represents no connection state at all</t>
+         <t>CLOSED:  represents a closed connection state </t>
        </list></t>
      </section>
          </section>
