@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+nugget<?xml version="1.0" encoding="US-ASCII"?>
 <!-- This template is modified by Seth Nielson for creating P-RFC's
     (Playground-RFC's). -->
 <!-- This template is for creating an Internet Draft using xml2rfc,
@@ -135,10 +135,6 @@
        error-free, and guaranteed to be delivered until the meal is over. The security of the nugget is achieved by using 3 flags - F,R and G which are used to set the mode of encryption by
        which the data is sent. </t>
   
-       <t>The PLAYGROUND system is designed to give students and researchers a sandbox
-       in which to develop network security experiments. For PLAYGROUND experiments that
-       involve a PETF (Playground Engineering Task Force), PRFC's (Playground RFC's) are
-       used in a manner similar to RFC's.</t>
      </section>
 
      <section title="Purpose">
@@ -159,7 +155,7 @@
    
    <section title="Functional Specification">
 
-     <section title="Packet Descriptions">
+     <section title="Nugget Descriptions">
   
  <t><figure><artwork><![CDATA[      
  0                   1                   2                   3
@@ -186,7 +182,7 @@
 |                                                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  ]]></artwork></figure></t>
-       <t>A "nugget" is defined as a packet in GDP. The following list defines
+       <t>A "nugget" is defined as a nugget in GDP. The following list defines
        the data types used for fields within a nugget:</t>
 	     <t><list style="empty">
          <t>BOOL:  a boolean data type; has a value of true or false</t>
@@ -251,13 +247,13 @@
        <t>To establish a meal, the GDP shall use a four-way handshake, namely (1) SYN, (2) SYN+ACK, (3) ACK_Client, and (4)Ack_Server.</t>
         <t> 1. A client node sends a SYN nugget over an IP network to a server. The objective of this nugget is to request if the server is open for new connections.</t>
 				<t> 2. The target server must have open ports that can accept and initiate new connections. When the server receives the SYN nugget from the client node, it responds and returns a SYN+ACK nugget
-        with F, R, G flag set to the encryption libraries available with the server. In the example below the SYN+ACK packet has the F|R|G set to 111 which implies that the server
-          has all the three excryption libraries to use for the data transmission. The data of this packet will include MealTicket which is Sequence number of SYN packet + nounce, which is work like a session id.
+        with F, R, G flag set to the encryption libraries available with the server. In the example below the SYN+ACK nugget has the F|R|G set to 111 which implies that the server
+          has all the three excryption libraries to use for the data transmission. The data of this nugget will include MealTicket which is Sequence number of SYN nugget + nounce, which is work like a session id.
        The body will also include the ServerSauce, which is a digital certificate of the server.</t>
 				<t> 3. The client node receives the SYN+ACK nugget from the server and responds with a Ack_Client nugget and selects one of the encryption schemes that the server mentioned.
-        In this example the client send the FFlag set to 1, which implies that the client wants to use AES Encryption libraries. The data of this packet will include the same MealTicket given by the server in the previous packet
+        In this example the client send the FFlag set to 1, which implies that the client wants to use AES Encryption libraries. The data of this nugget will include the same MealTicket given by the server in the previous nugget
        as well as the ClientSauce which will be the Digital Certificate to verify the client. Along with the above parameters the data also includes a MasterKey that the client generates.</t>
-				<t> 4. Now the target server receives the acknowledgement nugget ACK_Client from the client node and then sends back an ACK nugget Ack_Server and in the data of this packet will be the
+				<t> 4. Now the target server receives the acknowledgement nugget ACK_Client from the client node and then sends back an ACK nugget Ack_Server and in the data of this nugget will be the
           Digest which will contain the key for all the communication and this key will key will be derieved from the master key using any algorithm the server wishes to use. This Digest will be encrypted using the ClientSauce key.
         Upon completion of this process, the connection is created and the host and server can communicate.</t>
 
@@ -382,7 +378,7 @@
        <t>A session begins closing when either the sender sends a [FIN] nugget. The reciever must send 
          an [ACK] nugget for this. This is one-way meal termination. To complete the meal termination process, the 
          receiver must send a [FIN] nugget and the sender must send an [ACK] nugget as well. This is how the
-         meal termination takes place. In all the [FIN] packets, the finFlag is set to 1.
+         meal termination takes place. In all the [FIN] nuggets, the finFlag is set to 1.
        </t>
        
        <t> After the sender transmits a nugget with a finFlag, it waits on a response from
@@ -555,36 +551,15 @@ client                                   server
 			<section title="Key Management">
         <t>As you have realised we are using Sauce's as a simpler derivation of Digital Certificate to validate both the client and the Server. The proposed architecture for this is as follows:</t>
          <t><list style="numbers">
-           <t>Golden Nugget will create a Repository called "The Sauce Factory" in which Prof.Seth Nelson and Karan will also be the collaborators.</t>
+           <t>Golden Nugget will create a Repository called "The Sauce Factory" in which Dr.Seth Neilson and Karan will also be the collaborators.</t>
            <t>Each Company head will recieve a template to make their Sauce</t>
            <t>Company's will have have to generate their ServerSauce and each members ClientSauce and upload it to the repository</t>
            <t>Now this replicates how digital certificates work in real world communications</t>
            </list></t>
      </section>
      <section title="Data Transmission">
-       <t>Data transmission in the CDP is byte-oriented and occurs after a connection
-       has been established. It will pass the data to the next appropriate higher OSI
-       model layer for processing as soon as it has any amount of data in order. Due to
-       this processing, it closely resembles a stream of data.</t>
-
-       <t>Each packet is assigned a synNumber and ackNumber. These numbers are incremented
-       as packets are transmitted amongst the sender and receiver. The sender transmits its
-       synNumber, ackNumber, and data to the receiver.  It increments the synNumber based on
-       the last synNumber transmitted and the ackNumber based on the synNumber of the receiver.
-       The receiver transmits its synNumber and ackNumber back to the sender, acknowledging
-       receipt of the data. It increments its synNumber based on the last synNumber transmitted
-       and the ackNumber based on the synNumber of the sender.</t>
-
-       <t>These numbers ensure that the data transmitted is in order and allows for the
-       retransmissions of lost data. The receiver expects a packet with the next incremented
-       synNumber. If the receiver obtains a packet with a synNumber that has already been
-       accepted, it will discard the packet. This process ensures that there is no duplicate
-       data.</t>
-
-       <t>After transmitting data, the sender reviews the windowList to see the amount of
-       additional packets that it can transmit before obtaining acknowledgement from the
-       receiver. The receiver can modify the windowList to ensure the data is not being
-       sent too fast or too slow.</t>
+       <t>Once the MEAL is established the data transmission will start from both the peers connected to the session. Each nugget will have a Sequence number and an acknowledgement number set, 
+        the sequence number to specify where in the stream the nugget is, and the acknowledge number which signifies the number of bytes received. Both numbers are offset by the starting sequence number.</t>
      </section>
 
      <section title="Error Handling">
@@ -616,8 +591,8 @@ client                                   server
    <section title="Security Considerations">
      <t>The GDP seeks to transport data reliably over the network by implement security at the TCP layer.</t>
      
-     <t>Some potential attacks against the GDP include: insider threat, TCP Replay and denial of service
-     attacks. The GDP is susceptible to denial of service attacks through the flooding of synFlag packets. </t>
+     <t>Some potential attacks against the GDP include: insider threat and denial of service
+     attacks. The GDP is susceptible to denial of service attacks through the flooding of synFlag nuggets. Insider threat can be mitigated by access control and logging.</t>
    </section>
 
  </middle>
