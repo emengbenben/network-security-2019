@@ -1,0 +1,768 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><title>Post-Interstellar Mining Protocol Request For Comments</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Post-Interstellar Mining Protocol Request For Comments">
+<meta name="keywords" content="PRFC">
+<meta name="generator" content="xml2rfc v1.35dev (http://xml2rfc.ietf.org/)">
+<style type='text/css'><!--
+        body {
+                font-family: verdana, charcoal, helvetica, arial, sans-serif;
+                font-size: small; color: #000; background-color: #FFF;
+                margin: 2em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+                font-family: helvetica, monaco, "MS Sans Serif", arial, sans-serif;
+                font-weight: bold; font-style: normal;
+        }
+        h1 { color: #900; background-color: transparent; text-align: right; }
+        h3 { color: #333; background-color: transparent; }
+
+        td.RFCbug {
+                font-size: x-small; text-decoration: none;
+                width: 30px; height: 30px; padding-top: 2px;
+                text-align: justify; vertical-align: middle;
+                background-color: #000;
+        }
+        td.RFCbug span.RFC {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: bold; color: #666;
+        }
+        td.RFCbug span.hotText {
+                font-family: charcoal, monaco, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: normal; text-align: center; color: #FFF;
+        }
+
+        table.TOCbug { width: 30px; height: 15px; }
+        td.TOCbug {
+                text-align: center; width: 30px; height: 15px;
+                color: #FFF; background-color: #900;
+        }
+        td.TOCbug a {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, sans-serif;
+                font-weight: bold; font-size: x-small; text-decoration: none;
+                color: #FFF; background-color: transparent;
+        }
+
+        td.header {
+                font-family: arial, helvetica, sans-serif; font-size: x-small;
+                vertical-align: top; width: 33%;
+                color: #FFF; background-color: #666;
+        }
+        td.author { font-weight: bold; font-size: x-small; margin-left: 4em; }
+        td.author-text { font-size: x-small; }
+
+        /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+        a.info {
+                /* This is the key. */
+                position: relative;
+                z-index: 24;
+                text-decoration: none;
+        }
+        a.info:hover {
+                z-index: 25;
+                color: #FFF; background-color: #900;
+        }
+        a.info span { display: none; }
+        a.info:hover span.info {
+                /* The span will display just on :hover state. */
+                display: block;
+                position: absolute;
+                font-size: smaller;
+                top: 2em; left: -5em; width: 15em;
+                padding: 2px; border: 1px solid #333;
+                color: #900; background-color: #EEE;
+                text-align: left;
+        }
+
+        a { font-weight: bold; }
+        a:link    { color: #900; background-color: transparent; }
+        a:visited { color: #633; background-color: transparent; }
+        a:active  { color: #633; background-color: transparent; }
+
+        p { margin-left: 2em; margin-right: 2em; }
+        p.copyright { font-size: x-small; }
+        p.toc { font-size: small; font-weight: bold; margin-left: 3em; }
+        table.toc { margin: 0 0 0 3em; padding: 0; border: 0; vertical-align: text-top; }
+        td.toc { font-size: small; font-weight: bold; vertical-align: text-top; }
+
+        ol.text { margin-left: 2em; margin-right: 2em; }
+        ul.text { margin-left: 2em; margin-right: 2em; }
+        li      { margin-left: 3em; }
+
+        /* RFC-2629 <spanx>s and <artwork>s. */
+        em     { font-style: italic; }
+        strong { font-weight: bold; }
+        dfn    { font-weight: bold; font-style: normal; }
+        cite   { font-weight: normal; font-style: normal; }
+        tt     { color: #036; }
+        tt, pre, pre dfn, pre em, pre cite, pre span {
+                font-family: "Courier New", Courier, monospace; font-size: small;
+        }
+        pre {
+                text-align: left; padding: 4px;
+                color: #000; background-color: #CCC;
+        }
+        pre dfn  { color: #900; }
+        pre em   { color: #66F; background-color: #FFC; font-weight: normal; }
+        pre .key { color: #33C; font-weight: bold; }
+        pre .id  { color: #900; }
+        pre .str { color: #000; background-color: #CFF; }
+        pre .val { color: #066; }
+        pre .rep { color: #909; }
+        pre .oth { color: #000; background-color: #FCF; }
+        pre .err { background-color: #FCC; }
+
+        /* RFC-2629 <texttable>s. */
+        table.all, table.full, table.headers, table.none {
+                font-size: small; text-align: center; border-width: 2px;
+                vertical-align: top; border-collapse: collapse;
+        }
+        table.all, table.full { border-style: solid; border-color: black; }
+        table.headers, table.none { border-style: none; }
+        th {
+                font-weight: bold; border-color: black;
+                border-width: 2px 2px 3px 2px;
+        }
+        table.all th, table.full th { border-style: solid; }
+        table.headers th { border-style: none none solid none; }
+        table.none th { border-style: none; }
+        table.all td {
+                border-style: solid; border-color: #333;
+                border-width: 1px 2px;
+        }
+        table.full td, table.headers td, table.none td { border-style: none; }
+
+        hr { height: 1px; }
+        hr.insert {
+                width: 80%; border-style: none; border-width: 0;
+                color: #CCC; background-color: #CCC;
+        }
+--></style>
+</head>
+<body>
+
+<table border="0" cellpadding="0" cellspacing="2" width="30" align="right">
+    <tr>
+        <td class="RFCbug">
+                <span class="RFC">&nbsp;RFC&nbsp;</span><br /><span class="hotText">&nbsp;1&nbsp;</span>
+        </td>
+    </tr>
+    <tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a><br /></td></tr>
+</table>
+<table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr><td class="header">Network Working Group</td><td class="header">R. , Ed.</td></tr>
+<tr><td class="header">Request for Comments: 1</td><td class="header">JHU Network Security Spring 2019</td></tr>
+<tr><td class="header">Category: Standards Track</td><td class="header">April 2019</td></tr>
+</table></td></tr></table>
+<h1><br />Post-Interstellar Mining Protocol Request For Comments</h1>
+
+<h3>Abstract</h3>
+
+<p>Post-Interstellar Mining Protocol (PIMP) is a proposed transport layer 
+       protocol that provides communucation reliabily on the Playground environment.
+       PIMP is a simplified, TCP-like protocol. PIMP simplifies the protocol by making
+       it packet based instead of bit based. Secondly, PIMP standardizes the window
+       size, so it does not need to be included in the packet. Last, PIMP reduces
+       network traffic by simply requesting retransmission of missing or corrupted
+       packets, instead of ACKing each individual packet.ts, instead of ACKing each individual packet.
+</p>
+<h3>Status of this Memo</h3>
+<p>
+This document specifies a Playgrounds standards track protocol for the Playground
+Experiment, and requests discussion and suggestions for improvements.
+Distribution of this memo is unlimited.</p>
+
+<h3>Copyright Notice</h3>
+<p>
+Copyright (c) 2019 SETH JAMES NIELSON. All rights reserved.</p>
+<p>
+This document is used solely for educational purposes. Any citations
+within this document are also for educational purposes and also for
+technical reference. If any of these cited elements are protected
+under copyright, their inclusion here falls under Fair Use provisions.</p>
+<a name="toc"></a><hr />
+
+<table border="0" cellpadding="0" cellspacing="2" width="30" align="right">
+    <tr>
+        <td class="RFCbug">
+                <span class="RFC">&nbsp;RFC&nbsp;</span><br /><span class="hotText">&nbsp;1&nbsp;</span>
+        </td>
+    </tr>
+    <tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a><br /></td></tr>
+</table>
+<h3>Table of Contents</h3>
+<p class="toc">
+<a href="#anchor1">1.</a>&nbsp;
+Preface<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">1.1.</a>&nbsp;
+Requirements Language<br />
+<a href="#anchor3">2.</a>&nbsp;
+Motivation<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor4">2.1.</a>&nbsp;
+Reliability<br />
+<a href="#anchor5">3.</a>&nbsp;
+Protocol<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor6">3.1.</a>&nbsp;
+Header Descriptions<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor7">3.2.</a>&nbsp;
+Packet Description<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor8">3.3.</a>&nbsp;
+Error handling<br />
+<a href="#anchor9">4.</a>&nbsp;
+Technical Functionality<br />
+<a href="#anchor10">5.</a>&nbsp;
+ACK Specification<br />
+<a href="#anchor11">6.</a>&nbsp;
+PRFC Revision Process<br />
+<a href="#anchor12">7.</a>&nbsp;
+Security Considerations<br />
+<a href="#anchor13">8.</a>&nbsp;
+Copyright Information<br />
+<a href="#rfc.references1">9.</a>&nbsp;
+Normative References<br />
+<a href="#rfc.authors">&#167;</a>&nbsp;
+Author's Address<br />
+<a href="#rfc.copyright">&#167;</a>&nbsp;
+Intellectual Property and Copyright Statements<br />
+</p>
+<br clear="all" />
+
+<a name="anchor1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1"></a><h3>1.&nbsp;
+Preface</h3>
+
+<p>This document describes Network Security Spring 2019
+     Transmission Control Protocol. It draws heavily from DoD's
+     1981 Transmission Control Protocol RFC. It both modifies
+     and simplifies the original specification with an aim to
+     reduce network congestion.
+</p>
+<a name="anchor2"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1.1"></a><h3>1.1.&nbsp;
+Requirements Language</h3>
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+       document are to be interpreted as described in <a class='info' href='#RFC2119'>RFC 2119<span> (</span><span class='info'>Bradner, S., &ldquo;Key words for use in RFCs to Indicate Requirement Levels,&rdquo; March&nbsp;1997.</span><span>)</span></a> [RFC2119].
+</p>
+<a name="anchor3"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2"></a><h3>2.&nbsp;
+Motivation</h3>
+
+<p>For applications running in the Playground environment to reliably 
+      communicate, there needs to be a transport layer protocol that facilitates 
+     traffic.
+</p>
+<p>In order to simplify the protocol and reduce network congestion,
+     the PIMP window is set to a standard size (the maximum size allowed by
+     a two bit number - 65,535 - which is the largest number that can
+     be put in the two bit portion of the PIMP packet allocated to "window".
+</p>
+<p>In case of packet loss in extreme scenario, for example, client only sends one packet to server, but packet is lost, both server and client wait for the response from the other side. The ACK mechanism is needed.
+</p>
+<p>When server receives packer, it will place packets orderly, then it checks the sequence number of packet to determine if the packet is what it is supposed to receive. Once the packet is accepted by the server, it sends back a ACK packet.
+</p>
+<p>On the other side, after sending out the packet, the client will keep the data until it receives a corresponding ACK packet whose ACK number should be sequence number +1. It keeps waiting for 10 seconds. After timeout, it will resend the packets starting from time out packet. Within the 10 seconds, it will only be regarded as latency of network.
+</p>
+<p>Additionally, out of extreme scenario, the protocol is simplified by sending back a retransmission request packet for every missing sequence number after the window has been filled. The window is identified as "filled" after a specified timeout, and 
+     at this time, the retransmit requests will be sent. In this case, only the specific packets will be needed for retransmission.
+</p>
+<p>If the sender receives a retransmission request, it should send out
+     the missing packets sequentially. If the retransmission is not received, 
+     the receiver will continue sending out retransmission request packets
+     until the receiver actively closes the connection.
+</p>
+<p>In this way, the network traffic is reduced by not having an ACK for
+     each sequence number, but simply for each missing one, and an ACK for each 
+     window when it is complete.
+</p>
+<p>We no longer need a data offset field since the options field has been
+      removed, so the PIMP header will be of fixed length. Because the port 
+      numbers will be fixed, these fields can also be excluded from the PIMP header.
+</p>
+<p>Finally, we guard against SYN flooding by having a time out. If
+     nothing is received from a client within the timeout, the connection
+     is closed. SYN flooding may briefly occur, but the TCB will be flushed
+     of any connections that are not fully open each time the timeout elapses.
+</p>
+<a name="anchor4"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
+Reliability</h3>
+
+<p>The prime directive to PIMP is reliability. In order for data
+      to be reliably transmitted, sequence numbers are used. The sender
+      must complete the sequence and retransmit missing packets before
+      they are given a new window with the next set of sequence numbers.
+      Packets may be lost on the network, and a mechanism for retransmission
+      must be supplied. The sequence numbers prevent duplicates, verify all 
+      sent data has been received, and provide a mechanism for identifying 
+      missing segments. Checksums are provided to recognize corruption of data.
+      Retransmission of corrupted or fragmented data can then be requested.
+</p>
+<p>Additional metadata includes the "References" and "Author's Address"
+    sections. These elements MUST conform to RFC specifications.
+</p>
+<a name="anchor5"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3"></a><h3>3.&nbsp;
+Protocol</h3>
+
+<p>
+      </p>
+<div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+        from playground.network.packet import PacketType
+        from playground.network.packet.fieldtypes
+                              import UINT32, STRING, BUFFER, BOOLEAN
+        class PIMPPacket(PacketType):
+            DEFINITION_IDENTIFIER = "PIMP.Packet"
+            DEFINITION_VERSION = "1.0"
+            FIELDS = [
+              ("seqNum", UINT32),
+              ("ackNum", UINT32),
+              ("ACK", BOOLEAN),
+              ("RST", BOOLEAN),
+              ("SYN", BOOLEAN),
+              ("FIN", BOOLEAN),
+              ("RTR", BOOLEAN),
+              ("checkSum", BUFFER),
+              ("data", BUFFER)
+            ]
+
+</pre></div><p>
+
+
+	   
+</p>
+<a name="anchor6"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
+Header Descriptions</h3>
+
+<p>Sequence Number - 32 bits:
+</p>
+<p></p>
+<blockquote class="text">
+<p> The sequence number is in the seqNum field. We will use python's 
+              Random module in Initial Sequence Number (ISN) determination. If a packet is an ACK packet that is out of the handshake and just ACKing data, the seqNum should be set to 0 
+</p>
+</blockquote>
+
+<p>Acknowledgment Number - 32 bits:
+</p>
+<p></p>
+<blockquote class="text">
+<p>The acknowledgment number is a number that is 1 more than the last sequence number. 
+         			This is sent to the sender to notify them that their last packet was received. If a packet is an data packet that is out of the handshake, and just sending data, the ACK num should be set to 0.
+</p>
+</blockquote>
+
+<p>Control Flags:
+</p>
+<p></p>
+<blockquote class="text">
+<p>ACK - Acknowledgement field significant
+</p>
+<p>RST - Reset the connection
+</p>
+<p>SYN - Synchronize sequence numbers
+</p>
+<p>FIN - Receive no more data from the sender
+</p>
+<p>RTR - Request retransmission from sender
+</p>
+</blockquote>
+
+<p>Checksum - BUFFER
+</p>
+<p></p>
+<blockquote class="text">
+<p> Checksum will be done using the MD5 algorithm, which takes an arbitrary length input and produces a 128 bit output which is stored in a buffer. In our case the input will be header fields prior to the checksum (last field being RTR) and data. This requires little effort to implement, as there are packages to perform an MD5 hash.
+</p>
+</blockquote>
+
+<a name="anchor7"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+Packet Description</h3>
+
+<p>class PIMPPacket(PacketType):
+          DEFINITION_IDENTIFIER = "roastmyprofessor.pimp.PIMPPacket"
+    			DEFINITION_VERSION = "1.0"
+    			BODY = [
+        		("seqNum", UINT32),
+        		("ackNum", UINT32)
+         		("ACK", BOOLEAN)
+            ("RST", BOOLEAN)
+            ("SYN", BOOLEAN)
+            ("FIN", BOOLEAN)
+            ("RTR", BOOLEAN)
+            ("checksum", BUFFER)
+         		("data", BUFFER)
+    			]
+       
+</p>
+<p>PIMP packets include two sections, the header and the data sections. 
+         The header section includes the fields described in the header description. 
+         The data section, on the other hand, includes a buffer with the data being transmitted.
+</p>
+<a name="anchor8"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.3"></a><h3>3.3.&nbsp;
+Error handling</h3>
+
+<p>There are multiple errors that can occur:
+</p>
+<p></p>
+<ol class="text">
+<li>Packet loss
+</li>
+<li>Corrupted data (indicated by an incorrect checksum)
+</li>
+<li>*Packet with invalid flags (invalid flag combination) is received
+</li>
+</ol>
+
+<p>In case of experiencing packet loss, sender of a packet should keep a timer of minimum 5 seconds timeout before receiving ACK, after which it should resend the previous packet.
+</p>
+<p>In case of corrupted data, receiver should immediately sends a request for retranmission packet whose RTR flag MUST be set, together with the correct ACK number.
+</p>
+<p>*In the last case (invalid flag combination for a packet received), such as an incorrect combination of flags, the packet will be dropped.
+</p>
+<a name="anchor9"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;
+Technical Functionality</h3>
+
+<p>
+      The "three-way handshake" is the procedure used to establish a connection. This procedure normally is initiated by one PIMP and responded to by another PIMP. The procedure also works if two PIMP simultaneously initiate the procedure. When simultaneous attempt occurs, each PIMP receives packet with the SYN flag set which carries no acknowledgment after it has sent a "SYN". Of course, the arrival of an old duplicate "SYN" segment can potentially make it appear, to the recipient, that a simultaneous connection initiation is in progress. Proper use of "reset" segments can disambiguate these cases.
+      Several examples of connection initiation follow. Although these examples do not show connection synchronization using data-carrying segments, this is perfectly legitimate, so long as the receiving PIMP doesn't deliver the data to the user until it is clear the data is valid (i.e., the data must be buffered at the receiver until the connection reaches the ESTABLISHED state). The three-way handshake reduces the possibility of false connections. It is the implementation of a trade-off between memory and messages to provide information for this checking.
+      The simplest three-way handshake is shown in figure 7 below. The figures should be interpreted in the following way. Each line is numbered for reference purposes. Right arrows (-->) indicate
+      departure of a PIMP packet from PIMP A to PIMP B, or arrival of a packet at B from A. Left arrows, indicate the reverse. Ellipsis (...) indicates a segment which is still in the network (delayed). An "XXX" indicates a segment which is lost or rejected.
+      Comments appear in parentheses. PIMP states represent the state AFTER the departure or arrival of the segment (whose contents are shown in the center of each line). Segment contents are shown in abbreviated form, with sequence number, and ACK field. Other fields such as window, addresses, lengths, and text have been left out in the interest of clarity. 
+    
+</p>
+<p style='text-align: center'>The following artwork demonstrates the connection state diagram:
+</p><div style='display: table; width: 0; margin-left: auto; margin-right: auto'><pre>
+PIMP A                                                         PIMP B
+                                                        CLOSED LISTEN
+SYN-SENT    --&gt; &lt;SEQ=100&gt;&lt;SYNFLAG&gt;                   --&gt; SYN-RECEIVED
+ESTABLISHED &lt;-- &lt;SEQ=300&gt;&lt;ACK=101&gt;&lt;SYNFLAG, ACKFLAG&gt; &lt;-- SYN-RECEIVED
+ESTABLISHED --&gt; &lt;SEQ=101&gt;&lt;ACK=301&gt;&lt;ACKFLAG&gt;&lt;DATA&gt;     --&gt; ESTABLISHED
+
+</pre></div>
+<p style='text-align: center'>
+        PIMP Connection State Diagram
+      
+</p>
+<p>
+        The principle reason for the three-way handshake is to prevent old duplicate connection initiations from causing confusion. To deal with this, a special control message, reset, has been devised. If the receiving PIMP is in a non-synchronized state (i.e., SYN-SENT, SYN-RECEIVED), it returns to LISTEN on receiving an acceptable reset. If the TCP is in one of the synchronized states it aborts the connection and informs its user. We discuss this later case under "half-open" connections below. 
+</p>
+<p>
+        HALF OPEN
+        An established connection is said to be "half-open" if one of the PIMPs has closed or aborted the connection at its end without the knowledge of the other, or if the two ends of the connection have become desynchronized owing to a crash that resulted in loss of memory. Such connections will automatically become reset if an attempt is made to send data in either direction. However, half-open connections are expected to be unusual, and the recovery procedure is mildly involved.
+        If at site A the connection no longer exists, then an attempt by the user at site B to send any data on it will result in the site B PIMP receiving a reset control message. Such a message indicates to the site B PIMP that something is wrong, and it is expected to abort the connection.
+        Assume that two user processes A and B are communicating with one another when a crash occurs causing loss of memory to A's PIMP.
+        Depending on the operating system supporting A's PIMP, it is likely that some error recovery mechanism exists. When the PIMP is up again, A is likely to start again from the beginning or from a recovery point. As a result, A will probably try to OPEN the connection again or try to SEND on the connection it believes open. In the latter case, it receives the error message "connection not open" from the local (A's) PIMP. In an attempt to establish the connection, A's PIMP will send a packet containing SYN. This scenario leads to the example shown in figure 10. After PIMP A crashes, the user attempts to re-open the connection. PIMP B, in the meantime, thinks the connection is open. 
+        
+</p>
+<p style='text-align: center'>The following artwork demonstrates the connection state diagram:
+</p><div style='display: table; width: 0; margin-left: auto; margin-right: auto'><pre>
+PIMP A                                           PIMP B
+(CRASH) (send 300,receive 100)
+CLOSED ESTABLISHED
+SYN-SENT --&gt; &lt;SEQ=400&gt;&lt;SYNFLAG=TRUE&gt;          --&gt; (??)
+(!!)     &lt;-- &lt;SEQ=300&gt;&lt;ACK=100&gt;&lt;ACKFLAG=TRUE&gt; &lt;-- ESTABLISHED
+SYN-SENT --&gt; &lt;SEQ=100&gt;&lt;CTL=RST&gt;               --&gt; (Abort!!)
+SYN-SENT CLOSED
+SYN-SENT --&gt; &lt;SEQ=400&gt;&lt;SYNFLAG=TRUE&gt;          --&gt;
+
+</pre></div>
+<p style='text-align: center'>
+              PIMP Connection State Diagram
+            
+</p>
+<p>When the SYN arrives at line 3, PIMP B, being in a synchronized state and the incoming segment outside the window, responds with an acknowledgment indicating what sequence it next expects to hear (ACKFLAG = TRUE SEQ=100). PIMP A sees that this segment does not acknowledge anything it sent and, being unsynchronized, sends a reset (RST) because it has detected a half-open connection. PIMP B aborts at line 5. PIMP A will continue to try to establish the connection; the problem is now reduced to the basic 3-way handshake of figure 7.
+        An interesting alternative case occurs when PIMP A crashes and PIMP B tries to send data on what it thinks is a synchronized connection.
+        This is illustrated in figure 11. In this case, the data arriving at PIMP A from PIMP B (line 2) is unacceptable because no such connection exists, so PIMP A sends a RST. The RST is acceptable so PIMP B processes it and aborts the connection.
+</p>
+<p style='text-align: center'>The following artwork demonstrates the connection state diagram:
+</p><div style='display: table; width: 0; margin-left: auto; margin-right: auto'><pre>
+PIMP A                                                       PIMP B
+(CRASH) (send 300,receive 100)
+(??) &lt;-- &lt;SEQ=300&gt;&lt;ACK=100&gt;&lt;DATA=10&gt;&lt;ACKFLAG=TRUE&gt;. &lt;-- ESTABLISHED
+     --&gt; &lt;SEQ=100&gt;&lt;CTL=RST&gt;                         --&gt; (ABORT!!)
+ SOURCE: Obviously copied from TCP RFC&lt;/t&gt;
+
+</pre></div>
+<p style='text-align: center'>
+              PIMP Connection State Diagram
+            
+</p><br /><hr class="insert" />
+<a name="xml_state"></a>
+
+<p style='text-align: center'>The following artwork demonstrates the connection state diagram:
+</p><div style='display: table; width: 0; margin-left: auto; margin-right: auto'><pre>
+
+                          +---------+ ---------\      active OPEN
+                          |  CLOSED |            \    -----------
+                          +---------+&lt;---------\   \   create TCB
+                            |     ^              \   \  snd SYN
+               passive OPEN |     |   CLOSE        \   \
+               ------------ |     | ----------       \   \
+                create TCB  |     | delete TCB         \   \
+                            V     |                      \   \
+                          +---------+            CLOSE    |    \
+                          |  LISTEN |          ---------- |     |
+                          +---------+          delete TCB |     |
+               rcv SYN      |     |     SEND              |     |
+              -----------   |     |    -------            |     V
+  +-------+    snd SYN,ACK  /       \   snd SYN          +-------+
+ |         |&lt;---------------           ----------------&gt;|         |
+ |   SYN   |                rcv SYN                     |   SYN   |
+ |   RCVD  |&lt;-------------------------------------------|   SENT  |
+ |         |                  snd ACK                   |         |
+ |         |----------------           -----------------|         |
+ +---------+ rcv ACK of SYN  \       /  rcv SYN,ACK     +---------+
+   |         --------------   |     |   -----------
+   |                x         |     |     snd ACK
+   |                          V     V
+   |  CLOSE                 +---------+
+   | -------                |  ESTAB  |
+   | snd FIN                +---------+
+   |                 CLOSE    |     |    rcv FIN
+   V                -------   |     |    -------
+ +---------+        snd FIN  /       \   snd ACK        +---------+
+ |  FIN    |&lt;---------------           ----------------&gt;|  CLOSE  |
+ | WAIT-1  |------------------                          |   WAIT  |
+ +---------+          rcv FIN  \                        +---------+
+   | rcv ACK of FIN   -------   |                          CLOSE  |
+   | --------------   snd ACK   |                         ------- |
+   V        x                   V                         snd FIN V
+ +---------+                +---------+                 +---------+
+ |FINWAIT-2|                | CLOSING |                 | LAST-ACK|
+ +---------+                +---------+                 +---------+
+   |              rcv ACK of FIN |                 rcv ACK of FIN |
+   |  rcv FIN     -------------- |    Timeout=2MSL -------------- |
+   |  -------            x       V    ------------        x       V
+    \ snd ACK               +---------+delete TCB       +---------+
+     ----------------------&gt;|TIME WAIT|----------------&gt;| CLOSED  |
+                            +---------+                 +---------+
+
+</pre></div>
+<p style='text-align: center'>
+              PIMP Connection State Diagram
+            
+</p><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Figure&nbsp;1&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+
+<a name="anchor10"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5"></a><h3>5.&nbsp;
+ACK Specification</h3>
+
+<p>Under normal data transformation, the active open is performed by the client sending a SYN to the server. The client set the segmentâs sequence number to a random value A. Then when server successfully receives a SYN, in response, it replies with a SYN-ACK. The Ack number  is set to one more than the received sequence number i.e A+1. and the sequence number that the server chooses for the packet is another random number,B. Finally the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A+1, and the acknowledgement number is set to one more than the received sequence number i.e. B+1. At this point, both the client and server have received and acknowledgment of the connection. And the connection is established.
+</p>
+<p>If the first SYN packet is lost, the timeout mechanism will be called on client side and it will automatically resend the SYN packet once the ack does not arrive within the set time. And if it tries several times, connection will terminate.
+</p>
+<p>If SYN-ACK packet sent by server or ACK packet sent by the client is lost, timeout mechanism on server side will do the same thing, which means server will actively resend out the SYN-ACK packet once the ack does not arrive within the time. And if it tries several times, connection will terminate.
+</p>
+<p>Ideally, in the data transmission process, the client would send out data packets with continuously increment sequence numbers (seqNum). If nothing goes wrong, after the server receives a packet with seqNum = i, the server would respond back an acknowledgment packet to the client with the acknowledgment number (ackNum) equals to i + 1.
+</p>
+<p>In the case that the server does not successfully receive data packets sent from the client, no associated acknowledgment packets will be sent back to the client. As a result, as long as the client keeps track of all the sent packets, if after a certain timeout the client still not receive the ACK for those packets, the client would consider those packets are lost, and thus re-transmit them to the server again.
+</p>
+<p>The connection termination procedure for a pimp session is shown as following:
+    In the case the client initiates the termination, it sends a FIN. After receiving it, the server sends back a acknowledgement. The server waits for application process to close and then sends its FIN. After receiving it, the client sends back a acknowledgement. Then the server closes when receiving the ACK, and client waits until the ACK is received by the server then the client proceeds to the closed state. If any of the packet is lost during the transmission, the timeout function is applied.
+</p>
+<a name="anchor11"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6"></a><h3>6.&nbsp;
+PRFC Revision Process</h3>
+
+<p>Once a PRFC is officially published by the PETF, it cannot be modified further
+   for any reason. A new PRFC must be submitted that identifies the errors and 
+   proposes to "update" or "supercede" the previous document.
+</p>
+<p>A PRFC MUST use the "update" reference if the changes do not result in an
+   incompatible protocol and the old protocol is not shown to be insecure. 
+   Changes to PRFC's that are "updates" include:
+</p>
+<p></p>
+<ol class="text">
+<li>Corrections to spelling, grammar, and other wording in the document
+</li>
+<li>Additional details about operations and operational considerations
+</li>
+<li>Additional parameters or interactions to the existing protocol
+</li>
+</ol>
+
+<p>A PRFC MUST use the "supercede" reference if the changes result in an incompatible
+   protocol OR if the previous protocol is demonstrated to be insecure.
+</p>
+<p>Approval from the PETF MUST be obtained if approval was required for the original
+   PRFC.
+</p>
+<p>A PRFC submitted without PETF approval MUST be revised only by the same PLAYGROUND
+   group that submitted the original.
+</p>
+<a name="anchor12"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.7"></a><h3>7.&nbsp;
+Security Considerations</h3>
+
+<p>This specification is a documentation standard and not directly related
+   to the technical security of any protocol.
+</p>
+<a name="anchor13"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.8"></a><h3>8.&nbsp;
+Copyright Information</h3>
+
+<p>The PLAYGROUND experiment is still new and has not yet developed
+    a policy that has been reviewed by legal counsel. However, at present,
+    the following text MUST be used in the PRFC's.
+</p>
+<p>The copyright notice on the front page of the PRFC should read:
+    "Copyright (c) 2017 SETH JAMES NIELSON.  All rights reserved.
+</p>
+<p>This document is used solely for educational purposes.  Any citations
+   within this document are also for educational purposes and also for
+   technical reference.  If any of these cited elements are protected
+   under copyright, their inclusion here falls under Fair Use
+   provisions."
+</p>
+<p>Student authors MUST grant copyrights to SETH JAMES NIELSON. However,
+   they may also retain copyrights for themselves and add their names to the
+   copyright notice accordingly.
+</p>
+<p> The final page of the PRFC MUST include a section entitled 
+   "Full Copyright Statement" that reads:
+</p>
+<p>"Copyright (C) Seth James Nielson (2017).  All Rights Reserved.
+</p>
+<p>This document and translations of it may be copied and furnished to
+   others, and derivative works that comment on or otherwise explain it
+   or assist in its implementation may be prepared, copied, published
+   and distributed, in whole or in part, without restriction of any
+   kind, provided that the above copyright notice and this paragraph are
+   included on all such copies and derivative works.  However, this
+   document itself may not be modified in any way, such as by removing
+   the copyright notice or references to the PLAYGROUND experiment or
+   other associated organizations, except by explicit permission.
+</p>
+<p>The limited permissions granted above are perpetual and will not be
+   revoked by SETH JAMES NIELSON or his successors or assigns.
+</p>
+<p>This document and the information contained herein is provided on an
+   "AS IS" basis and SETH JAMES NIELSON and associated academic
+   institutions DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."
+</p>
+<p>After the "Full Copyright Statement" the PRFC MUST include a section
+   entitled "Intellectual Property" that reads:
+</p>
+<p>The PLAYGROUND framework and student submissions for PLAYGROUND are
+   intended to be free of any intellectual property conflicts.  All
+   submitting parties, especially students, are not allowed to submit
+   source code, specifications, or other components that are known to be
+   protected by copyright, patents, or other IP mechanisms.  Students
+   submitting creative content grant shared rights and ownership of
+   their content to the PLAYGROUND project.  Specifically, any
+   submission can be used in future educational settings including
+   subsequent PLAYGROUND experiments.
+</p>
+<p>Any interested party is invited to bring to the experiment director's
+   attention any copyrights, patents or patent applications, or other
+   proprietary rights which may cover technology that may be currently
+   in use without permission.
+</p>
+<p>It should be noted that these statements have not been reviewed by
+   legal counsel.  Moreover, the academic institutions at which
+   PLAYGROUND experiments take place may have additional or even
+   conflicting copyright and intellectual property rules.  Accordingly,
+   concerned parties may need to contact their own lawyer and/or
+   resources at their institution to understand the rights and
+   limitations associated with code donated to a PLAYGROUND experiment."
+</p>
+<p>As with the initial copyright notice, the Copyright assignment to
+   Seth James Nielson can be agumented the the names of the authors.
+</p>
+<a name="rfc.references1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>9.&nbsp;Normative References</h3>
+<table width="99%" border="0">
+<tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
+<td class="author-text">Bradner, S., &ldquo;<a href="https://www.rfc-editor.org/info/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>,&rdquo; BCP&nbsp;14, RFC&nbsp;2119, DOI&nbsp;10.17487/RFC2119, March&nbsp;1997.</td></tr>
+</table>
+
+<a name="rfc.authors"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>Author's Address</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Roast My Professor (editor)</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">JHU Network Security Spring 2019</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">JHU 160 Malone Hall/3400 North Charles St.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Baltimore, MD  21218</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">USA</td></tr>
+</table>
+<a name="rfc.copyright"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>Full Copyright Statement</h3>
+<p class='copyright'>
+Copyright &copy; Seth James Nielson (2019). All Rights Reserved.</p>
+<p class='copyright'>
+This document and translations of it may be copied and furnished to
+others, and derivative works that comment on or otherwise explain it
+or assist in its implementation may be prepared, copied, published and
+distributed, in whole or in part, without restriction of any kind,
+provided that the above copyright notice and this paragraph are
+included on all such copies and derivative works. However, this
+document itself may not be modified in any way, such as by removing
+the copyright notice or references to the PLAYGROUND experiment or other
+associated organizations, except by explicit permission.</p>
+<p class='copyright'>
+The limited permissions granted above are perpetual and will not be
+revoked by SETH JAMES NIELSON or his successors or assigns.</p>
+<p class='copyright'>
+This document and the information contained herein is provided on an
+&ldquo;AS IS&rdquo; basis and SETH JAMES NIELSON and associated academic institutions
+DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
+<h3>Intellectual Property</h3>
+<p class='copyright'>
+The PLAYGROUND framework and student submissions for
+PLAYGROUND are intended to be free of any intellectual
+property conflicts. All submitting parties, especially students,
+are not allowed to submit source code, specifications, or 
+other components that are known to be protected by copyright,
+patents, or other IP mechanisms. Students submitting creative
+content grant shared rights and ownership of their content to
+the PLAYGROUND project. Specifically, any submission can be
+used in future educational settings including subsequent PLAYGROUND
+experiments.</p>
+<p class='copyright'>
+Any interested party is invited to bring to the experiment director's
+attention any copyrights, patents or patent applications, or
+other proprietary rights which may cover technology that may be
+currently in use without permission.</p>
+<p class='copyright'>
+It should be noted that these statements have not been reviewed
+by legal counsel. Moreover, the academic institutions at
+which PLAYGROUND experiments take place may have additional 
+or even conflicting copyright and intellectual property rules.
+Accordingly, concerned parties may need to contact their own lawyer
+and/or resources at their institution to understand the rights and
+limitations associated with code donated to a PLAYGROUND experiment.</p>
+</body></html>
