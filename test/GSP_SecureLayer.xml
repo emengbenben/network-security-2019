@@ -143,7 +143,11 @@
         <section title="Purpose">
             <t>This memorandum describes the way the secure channel is established. 
                Its purpose is to ensure message authorization, confidentiality, authenticity, and message integrity.</t>       
-             
+            <t><list style="numbers">
+                  <t>Authentication: Both the server and the client need to be mutually authenticated.</t>
+                  <t>Confidentiality: Data sent over the channel after establishment is only visible to the endpoints.</t>  
+                  <t>Integrity: Data sent over the channel after establishment cannot be modified by attackers without detection. </t>    
+            </list></t>    
         </section>
 
         <section title="Protocol Specifications">
@@ -152,7 +156,7 @@
               and establish shared secret keying material.  Once the handshake is complete, the peers use the established keys to protect the application-layer traffic.</t>
             
             <t>The GSP handshake protocol:</t>
-            <list style="numbers">
+            <t><list style="numbers">
               <t>The Client initially sends a ClientHello request which contains a cipher suite, a client certificate and any additional information that it wishes to send (like an alert message). </t>
               <t> The server, on receiving everything from the client, sends its choice of cipher, server certificate and any additional information. This additional information can contain alert messages that can be used for error handling.</t>
              <t> On connection establishment, the client sends a nonce which is a randomly generated number along with a session key which is randomly generated to ensure the security of a communications session between two nodes. Throughout each session, the key is transmitted along with each message and is encrypted with the recipient's public key. </t>
@@ -160,7 +164,7 @@
              <t>After receivong the encrypted nonce and session key to the server, the server decrypts these using its private key.</t>
              <t>The server sends nonce+1 along with the same session key, encrypted under the client's public key.</t>
              <t>The client can decrypt this using its private key. After this, both the client and server have each other's public key which is used for data transmission in the future.</t>
-              </list>
+              </list></t>
                     <figure>
                          <artwork><![CDATA[
       Client                                         Server
@@ -207,7 +211,7 @@ _________________________________________________________________
 ]]>            
                   </artwork>
                     </figure>
-            <list style="numbers">
+            <t><list style="numbers">
                     <t>How are identities established?                
                       Playground addresses are the only identity we’ll be using for establishing authentication. 
                       For example, 20191.0.1.1 is an identity for purposes of our implementation. 
@@ -226,7 +230,7 @@ _________________________________________________________________
                     <t>How does a party prove identity to another?
                       We will use the public key to prove identity from one party to another. The public key encrypts and the private key decrypts. 
                       Encrypt a message with the server's public key, send it, and if the server can repeat back the original message, it just proved that it got the private key without revealing the key.</t>
-            </list>        
+            </list></t>        
           </section>
 
           
@@ -234,13 +238,13 @@ _________________________________________________________________
               <t>The client begins by sending a Client Hello to the server. In the Client Hello packet, it also sends a cipher suite that offers three options
                 for encryption. The packet also contains the client's certificate that is authorized by the Root Certificate Authority. This certificate can further be signed by the Certificate authority </t>
               <t>The cipher suits offered by the GSP are: </t>
-                <list style="numbers">
+                <t><list style="numbers">
                     <t> AES_128_GCM_256 </t>
                     <t> AES_256_GCM_SHA_384 </t>
                     <t> RSA_WITH_AES_128_CBC_SHA </t>
                       
                   <t>The Client Hello ends when all these 3 things are sent by the client. There may be certain errors associated with the Client Hello Request which will be explained in the Error Handling section.</t>
-                </list> 
+                </list></t> 
 
            </section>
             
