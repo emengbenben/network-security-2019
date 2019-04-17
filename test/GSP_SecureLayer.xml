@@ -138,9 +138,9 @@
              <t>MealTicket: indicates the session.id </t>
              <t>SauceFactory: repository that contains digital certs from the server and the client </t>
              </section>
-       </section>
+        </section>
 
-       <section title="Purpose">
+        <section title="Purpose">
             <t>This memorandum describes the way the secure channel is established. 
                Its purpose is to ensure message authorization, confidentiality, authenticity, and message integrity.</t>       
             <list style="numbers">
