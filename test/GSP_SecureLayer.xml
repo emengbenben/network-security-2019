@@ -261,10 +261,10 @@ _________________________________________________________________
           </section>
                 
                      
-         <section title = "Server and Client Certificate and Verification">
+          <section title = "Server and Client Certificate and Verification">
            Server sends its certificate to the client after verifying the client's certificate and receiving the client's Hello packet. The server 
            certificate will be verified if it has been signed by the root CA. A VerifyCert() method can be defined to take in the recieved certificate as an parameter to ferify the certificate.
-             </section>
+          </section>
           
           <section title="Parameters">
           <t> Contents inside the GSP certificate is shown below:</t>
