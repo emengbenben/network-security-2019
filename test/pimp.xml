@@ -4,19 +4,21 @@
 <!-- This template is for creating an Internet Draft using xml2rfc,
     which is available here: http://xml2rfc.ietf.org. -->
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!-- One method to get references from the online citation libraries.
-    There has to be one entity for each item to be referenced. 
-    An alternate method (rfc include) is described in the references. -->
+        <!-- One method to get references from the online citation libraries.
+            There has to be one entity for each item to be referenced.
+            An alternate method (rfc include) is described in the references. -->
 
-<!ENTITY RFC2119 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
-<!ENTITY RFC2360 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2360.xml">
-<!ENTITY RFC2629 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2629.xml">
-<!ENTITY RFC3552 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.3552.xml">
-<!ENTITY RFC5226 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5226.xml">
-]>
+        <!ENTITY RFC2119 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+        <!ENTITY RFC2360 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2360.xml">
+        <!ENTITY RFC2629 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2629.xml">
+        <!ENTITY RFC3552 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.3552.xml">
+        <!ENTITY RFC5226 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5226.xml">
+        <!ENTITY RFC5246 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5246.xml">
+        <!ENTITY RFC8446 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml">
+        ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <!-- used by XSLT processors -->
-<!-- For a complete list and description of processing instructions (PIs), 
+<!-- For a complete list and description of processing instructions (PIs),
     please see http://xml2rfc.ietf.org/authoring/README.html. -->
 <!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
     (Here they are set differently than their defaults in xml2rfc v1.32) -->
@@ -32,7 +34,7 @@
 <!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
 <?rfc sortrefs="yes" ?>
 <!-- sort the reference entries alphabetically -->
-<!-- control vertical white space 
+<!-- control vertical white space
     (using these PIs as follows is recommended by the RFC Editor) -->
 <?rfc compact="yes" ?>
 <!-- do not start each main section on a new page -->
@@ -41,33 +43,31 @@
 <!-- end of list of popular I-D processing instructions -->
 
 
+<rfc category="std" docName="GSP_SecureLayer" ipr="playgroundStd_v1_0" number="1">
+    <!-- category values: std, bcp, info, exp, and historic
+       ipr values: trust200902, noModificationTrust200902, noDerivativesTrust200902,
+          or pre5378Trust200902, playgroundWinter201501
+       you can add the attributes updates="NNNN" and obsoletes="NNNN"
+       they will automatically be output with "(if approved)" -->
 
-
-<rfc category="std" docName="rfc1" ipr="playgroundStd_v1_0" number="1">
- <!-- category values: std, bcp, info, exp, and historic
-    ipr values: trust200902, noModificationTrust200902, noDerivativesTrust200902,
-       or pre5378Trust200902, playgroundWinter201501
-    you can add the attributes updates="NNNN" and obsoletes="NNNN" 
-    they will automatically be output with "(if approved)" -->
-
- <!-- ***** FRONT MATTER ***** -->
+    <!-- ***** FRONT MATTER ***** -->
 
  <front>
    <!-- The abbreviated title is used in the page header - it is only necessary if the 
         full title is longer than 39 characters -->
 
-   <title abbrev="PRFC's">Post-Interstellar Mining Protocol Request For Comments</title>
+   <title abbrev="GSP">GoNuts Secure Protocol</title>
 
    <!-- add 'role="editor"' below for the editors if appropriate -->
 
    <!-- Another author who claims to be an editor -->
 
-   <author fullname="Roast My Professor" initials="R.M.P." role="editor">
+   <author fullname="Golden Nugget" initials="G.N." role="editor" surname="Nugget">
      <organization>JHU Network Security Spring 2019</organization>
 
      <address>
        <postal>
-         <street>JHU 160 Malone Hall/3400 North Charles St.</street>
+         <street>JHU Malone MSSI Lab</street>
 
          <!-- Reorder these if your country does things differently -->
 
@@ -80,503 +80,273 @@
          <country>USA</country>
        </postal>
 
+       <phone>+1 123-456-7890</phone>
+
+       <email>golden_nugget@jhu.edu</email>
+
        <!-- uri and facsimile elements may also be added -->
      </address>
    </author>
 
    <date year="2019" />
 
-   <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
-        in the current day for you. If only the current year is specified, xml2rfc will fill 
-   in the current day and month for you. If the year is not the current one, it is 
-   necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
-   purpose of calculating the expiry date).  With drafts it is normally sufficient to 
-   specify just the year. -->
+        <!-- If the month and year are both specified and are the current ones, xml2rfc will fill
+             in the current day for you. If only the current year is specified, xml2rfc will fill
+          in the current day and month for you. If the year is not the current one, it is
+          necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the
+          purpose of calculating the expiry date).  With drafts it is normally sufficient to
+          specify just the year. -->
 
-   <!-- Meta-data Declarations -->
+        <!-- Meta-data Declarations -->
 
-   <area>General</area>
+        <area>General</area>
 
-   <workgroup>Playground Experiment Director</workgroup>
+       <workgroup>Network Working Group</workgroup>
 
-   <!-- WG name at the upperleft corner of the doc,
-        IETF is fine for individual submissions.  
-   If this element is not present, the default is "Network Working Group",
-        which is used by the RFC Editor as a nod to the history of the IETF. -->
+       <!-- WG name at the upper left corner of the doc,
+            IETF is fine for individual submissions.  
+       If this element is not present, the default is "Network Working Group",
+            which is used by the RFC Editor as a nod to the history of the IETF. -->
 
-   <keyword>PRFC</keyword>
+       <keyword>PRFC</keyword>
 
-   <!-- Keywords will be incorporated into HTML output
-        files in a meta tag but they have no effect on text or nroff
-        output. If you submit your draft to the RFC Editor, the
-        keywords will be used for the search engine. -->
+       <!-- Keywords will be incorporated into HTML output
+            files in a meta tag but they have no effect on text or on
+            output. If you submit your draft to the RFC Editor, the
+            keywords will be used for the search engine. -->
 
-   <abstract>
-     <t>Post-Interstellar Mining Protocol (PIMP) is a proposed transport layer 
-       protocol that provides communucation reliabily on the Playground environment.
-       PIMP is a simplified, TCP-like protocol. PIMP simplifies the protocol by making
-       it packet based instead of bit based. Secondly, PIMP standardizes the window
-       size, so it does not need to be included in the packet. Last, PIMP reduces
-       network traffic by simply requesting retransmission of missing or corrupted
-       packets, instead of ACKing each individual packet.ts, instead of ACKing each individual packet.</t>
-   </abstract>
- </front>
+        <abstract>
+            <t>This document describes the GoNuts Secure Protocol (GSP). 
+               In this PRFC, we describe all the necessary cryptography to establish a “secure authenticated channel.” </t>
+        </abstract>
+    </front>
 
- <middle>
-   <section title="Preface">
-     <t>This document describes Network Security Spring 2019
-     Transmission Control Protocol. It draws heavily from DoD's
-     1981 Transmission Control Protocol RFC. It both modifies
-     and simplifies the original specification with an aim to
-     reduce network congestion.</t>
+    <middle>
+        <section title="Introduction">
+           <section title="Overview">
+           <t>In GoNuts Secure Protocol (GSP), two nodes that use GSP would know the identity of the other party to satisfy mutual authentication. 
+             For the authenticity of data, subsequent transmissions can be proved to have come from the two parties once authenticated.  
+             For confidentiality of data, only the two parties can read the transmitted data once authenticated. 
+             For integrity of data, the communications cannot be undetectably altered, dropped, or reordered once authenticated.   </t>
+           </section>
 
-     <section title="Requirements Language">
-       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-       document are to be interpreted as described in <xref
-       target="RFC2119">RFC 2119</xref>.</t>
-     </section>
-   </section>
-   
-   <section title="Motivation">
-     <t>For applications running in the Playground environment to reliably 
-      communicate, there needs to be a transport layer protocol that facilitates 
-     traffic.</t>
-     
-     <t>In order to simplify the protocol and reduce network congestion,
-     the PIMP window is set to a standard size (the maximum size allowed by
-     a two bit number - 65,535 - which is the largest number that can
-     be put in the two bit portion of the PIMP packet allocated to "window".</t>
-     
-     <t>In case of packet loss in extreme scenario, for example, client only sends one packet to server, but packet is lost, both server and client wait for the response from the other side. The ACK mechanism is needed.</t>
+            <section title="Requirements Language">
+             <t>ServerSauce: indicates the digital cert from Server </t>
+             <t>ClientSauce: indicates the digital cert from Client </t>
+             <t>Nugget: indicates the packet</t>
+             <t>Meal: indicates the session</t>
+             <t>MealTicket: indicates the session.id </t>
+             <t>SauceFactory: repository that contains digital certs from the server and the client </t>
+             </section>
+        </section>
 
-     <t>When server receives packer, it will place packets orderly, then it checks the sequence number of packet to determine if the packet is what it is supposed to receive. Once the packet is accepted by the server, it sends back a ACK packet.</t>
+        <section title="Purpose">
+            <t>This memorandum describes the way the secure channel is established. 
+               Its purpose is to ensure message authorization, confidentiality, authenticity, and message integrity.</t>       
+            <t><list style="numbers">
+                  <t>Authentication: Both the server and the client need to be mutually authenticated.</t>
+                  <t>Confidentiality: Data sent over the channel after establishment is only visible to the endpoints.</t>  
+                  <t>Integrity: Data sent over the channel after establishment cannot be modified by attackers without detection. </t>    
+            </list></t>    
+        </section>
 
-     <t>On the other side, after sending out the packet, the client will keep the data until it receives a corresponding ACK packet whose ACK number should be sequence number +1. It keeps waiting for 10 seconds. After timeout, it will resend the packets starting from time out packet. Within the 10 seconds, it will only be regarded as latency of network.</t>
+        <section title="Protocol Specifications">
+          <section title="Authentication">
+            <t>The handshake protocol allows peers to negotiate a protocol version, select cryptographic algorithms, optionally authenticate each other,
+              and establish shared secret keying material.  Once the handshake is complete, the peers use the established keys to protect the application-layer traffic.</t>
+            
+            <t>The GSP handshake protocol:</t>
+            <t><list style="numbers">
+              <t>The Client initially sends a ClientHello request which contains a cipher suite, a client certificate and any additional information that it wishes to send (like an alert message). </t>
+              <t> The server, on receiving everything from the client, sends its choice of cipher, server certificate and any additional information. This additional information can contain alert messages that can be used for error handling.</t>
+             <t> On connection establishment, the client sends a nonce which is a randomly generated number along with a session key which is randomly generated to ensure the security of a communications session between two nodes. Throughout each session, the key is transmitted along with each message and is encrypted with the recipient's public key. </t>
+             <t>In case of the client, the nonce and the session key are encrypted with the server's public key.</t>
+             <t>After receivong the encrypted nonce and session key to the server, the server decrypts these using its private key.</t>
+             <t>The server sends nonce+1 along with the same session key, encrypted under the client's public key.</t>
+             <t>The client can decrypt this using its private key. After this, both the client and server have each other's public key which is used for data transmission in the future.</t>
+              </list></t>
+                    <figure>
+                         <artwork><![CDATA[
+      Client                                         Server
 
-     <t>Additionally, out of extreme scenario, the protocol is simplified by sending back a retransmission request packet for every missing sequence number after the window has been filled. The window is identified as "filled" after a specified timeout, and 
-     at this time, the retransmit requests will be sent. In this case, only the specific packets will be needed for retransmission.</t>
-     
-     <t>If the sender receives a retransmission request, it should send out
-     the missing packets sequentially. If the retransmission is not received, 
-     the receiver will continue sending out retransmission request packets
-     until the receiver actively closes the connection.</t>
-     
-     <t>In this way, the network traffic is reduced by not having an ACK for
-     each sequence number, but simply for each missing one, and an ACK for each 
-     window when it is complete.</t>
-     
-     <t>We no longer need a data offset field since the options field has been
-      removed, so the PIMP header will be of fixed length. Because the port 
-      numbers will be fixed, these fields can also be excluded from the PIMP header.</t>
-     
-     <t>Finally, we guard against SYN flooding by having a time out. If
-     nothing is received from a client within the timeout, the connection
-     is closed. SYN flooding may briefly occur, but the TCB will be flushed
-     of any connections that are not fully open each time the timeout elapses.</t>
-    
-    <section title="Reliability">
-    <t>The prime directive to PIMP is reliability. In order for data
-      to be reliably transmitted, sequence numbers are used. The sender
-      must complete the sequence and retransmit missing packets before
-      they are given a new window with the next set of sequence numbers.
-      Packets may be lost on the network, and a mechanism for retransmission
-      must be supplied. The sequence numbers prevent duplicates, verify all 
-      sent data has been received, and provide a mechanism for identifying 
-      missing segments. Checksums are provided to recognize corruption of data.
-      Retransmission of corrupted or fragmented data can then be requested.</t>
-    
-    <t>Additional metadata includes the "References" and "Author's Address"
-    sections. These elements MUST conform to RFC specifications.</t>
-    </section>
+  +--------------+
+  | ClientHello  |
+  |--------------|+--------------------------->
+  |-Cipher Suite |                           
+  |-Certificate  |                             
+  |-Additional   |
+  | Message      |                       
+  +--------------+                              +--------------+
+                                                | ServerHello  |
+                  <----------------------------+|--------------|
+                                                |-Choice of    |
+                                                | Cipher       |
+                                                |-Certificate  |
+                                                |-Additional   |
+                                                | Message      | 
+                                                +--------------+
   
-   </section>
-   
-   <section title="Protocol">
-   <t>
-      <figure>
-          <artwork><![CDATA[
-        from playground.network.packet import PacketType
-        from playground.network.packet.fieldtypes 
-                              import UINT32, STRING, BUFFER, BOOLEAN
-        class PIMPPacket(PacketType):
-            DEFINITION_IDENTIFIER = "PIMP.Packet"
-            DEFINITION_VERSION = "1.0"
-            FIELDS = [
-              ("seqNum", UINT32),
-              ("ackNum", UINT32),
-              ("ACK", BOOLEAN), 
-              ("RST", BOOLEAN),
-              ("SYN", BOOLEAN),
-              ("FIN", BOOLEAN),
-              ("RTR", BOOLEAN),
-              ("checkSum", BUFFER),  
-              ("data", BUFFER)
-            ]
-                  ]]>
-          </artwork>
-      </figure>
+  +---------------+
+  |NONCE, Session |
+  |        Key    |
+  +---------------+   
+  |encrypted with |
+  |the server's   | 
+  |   public key  |
+  +---------------+    ------------------>      
+                                                +---------------+
+                                                |NONCE+1,Session| 
+                                                |   key         |
+                                                +---------------+
+                                                |encrypted with |
+                                                |client's public|
+                                                |           key |
+                     <--------------------      +---------------+
+-----------------------------------------------------------------
+                      CONNECTION ESTABLISHMENT 
+_________________________________________________________________
+                  
+                    Figure 1. GSP Handshake
 
-	   </t>
-     <section title = "Header Descriptions">
-       <t>Sequence Number - 32 bits:</t>
-       			<t><list style="empty">
-							<t> The sequence number is in the seqNum field. We will use python's 
-              Random module in Initial Sequence Number (ISN) determination. If a packet is an ACK packet that is out of the handshake and just ACKing data, the seqNum should be set to 0 </t>
-            </list></t>
-       <t>Acknowledgment Number - 32 bits:</t>
-       			<t><list style="empty">
-							<t>The acknowledgment number is a number that is 1 more than the last sequence number. 
-         			This is sent to the sender to notify them that their last packet was received. If a packet is an data packet that is out of the handshake, and just sending data, the ACK num should be set to 0.</t>
-            </list></t>
-       <t>Control Flags:</t>
-       			<t><list style="empty">
-							<t>ACK - Acknowledgement field significant</t>
-              <t>RST - Reset the connection</t>
-              <t>SYN - Synchronize sequence numbers</t>
-              <t>FIN - Receive no more data from the sender</t>
-              <t>RTR - Request retransmission from sender</t>
-            </list></t>
-       <t>Checksum - BUFFER</t>
+]]>            
+                  </artwork>
+                    </figure>
+            <t><list style="numbers">
+                    <t>How are identities established?                
+                      Playground addresses are the only identity we’ll be using for establishing authentication. 
+                      For example, 20191.0.1.1 is an identity for purposes of our implementation. 
+                      Thus, if somebody “attacks” somebody else from an address, we can identify the group that is responsible for the incident.</t>
 
-       			<t><list style="empty">
-							<t> Checksum will be done using the MD5 algorithm, which takes an arbitrary length input and produces a 128 bit output which is stored in a buffer. In our case the input will be header fields prior to the checksum (last field being RTR) and data. This requires little effort to implement, as there are packages to perform an MD5 hash.</t>
+                    <t>How are identities verified?
+                      For server authentication, the client uses the server's public key to encrypt the data that is used to compute the secret key. 
+                      The server can generate the secret key only if it can decrypt that data with the correct private key. 
+                      For client authentication, the server uses the public key in the client certificate to decrypt the data the client sends during the handshake. 
+                      The exchange of finished messages that are encrypted with the secret key confirms that authentication is complete.
+                      The exchange of digital certificates during the SSL or TLS handshake is part of the authentication process. </t>
 
-            </list></t>
-     </section>
-     
-     <section title = "Packet Description">
-       <t>class PIMPPacket(PacketType):
-          DEFINITION_IDENTIFIER = "roastmyprofessor.pimp.PIMPPacket"
-    			DEFINITION_VERSION = "1.0"
-    			BODY = [
-        		("seqNum", UINT32),
-        		("ackNum", UINT32)
-         		("ACK", BOOLEAN)
-            ("RST", BOOLEAN)
-            ("SYN", BOOLEAN)
-            ("FIN", BOOLEAN)
-            ("RTR", BOOLEAN)
-            ("checksum", BUFFER)
-         		("data", BUFFER)
-    			]
-       </t>
-       <t>PIMP packets include two sections, the header and the data sections. 
-         The header section includes the fields described in the header description. 
-         The data section, on the other hand, includes a buffer with the data being transmitted.</t>
-     </section>
-     
-     <section title = "Error handling">
-       <t>There are multiple errors that can occur:</t>
-       
-       <t><list style="numbers">
-		        <t>Packet loss</t>
-            <t>Corrupted data (indicated by an incorrect checksum)</t>
-		        <t>*Packet with invalid flags (invalid flag combination) is received</t>
-       </list></t>
-       
-       <t>In case of experiencing packet loss, sender of a packet should keep a timer of minimum 5 seconds timeout before receiving ACK, after which it should resend the previous packet.</t>
+                    <t>How is trust established?
+                      Trust is established based on the signed digital certificates by Playground Authorities.</t>
+              
+                    <t>How does a party prove identity to another?
+                      We will use the public key to prove identity from one party to another. The public key encrypts and the private key decrypts. 
+                      Encrypt a message with the server's public key, send it, and if the server can repeat back the original message, it just proved that it got the private key without revealing the key.</t>
+            </list></t>        
+          </section>
 
-       <t>In case of corrupted data, receiver should immediately sends a request for retranmission packet whose RTR flag MUST be set, together with the correct ACK number.</t>
+          
+           <section title="Client Hello Request">
+              <t>The client begins by sending a Client Hello to the server. In the Client Hello packet, it also sends a cipher suite that offers three options
+                for encryption. The packet also contains the client's certificate that is authorized by the Root Certificate Authority. This certificate can further be signed by the Certificate authority </t>
+              <t>The cipher suits offered by the GSP are: </t>
+                <t><list style="numbers">
+                    <t> AES_128_GCM_256 </t>
+                    <t> AES_256_GCM_SHA_384 </t>
+                    <t> RSA_WITH_AES_128_CBC_SHA </t>
+                      
+                  <t>The Client Hello ends when all these 3 things are sent by the client. There may be certain errors associated with the Client Hello Request which will be explained in the Error Handling section.</t>
+                </list></t> 
 
-       <t>*In the last case (invalid flag combination for a packet received), such as an incorrect combination of flags, the packet will be dropped.</t>
-
-     </section>
-   </section>
-   
-   <section title="Technical Functionality">
-     <t>
-      The "three-way handshake" is the procedure used to establish a connection. This procedure normally is initiated by one PIMP and responded to by another PIMP. The procedure also works if two PIMP simultaneously initiate the procedure. When simultaneous attempt occurs, each PIMP receives packet with the SYN flag set which carries no acknowledgment after it has sent a "SYN". Of course, the arrival of an old duplicate "SYN" segment can potentially make it appear, to the recipient, that a simultaneous connection initiation is in progress. Proper use of "reset" segments can disambiguate these cases.
-      Several examples of connection initiation follow. Although these examples do not show connection synchronization using data-carrying segments, this is perfectly legitimate, so long as the receiving PIMP doesn't deliver the data to the user until it is clear the data is valid (i.e., the data must be buffered at the receiver until the connection reaches the ESTABLISHED state). The three-way handshake reduces the possibility of false connections. It is the implementation of a trade-off between memory and messages to provide information for this checking.
-      The simplest three-way handshake is shown in figure 7 below. The figures should be interpreted in the following way. Each line is numbered for reference purposes. Right arrows (-->) indicate
-      departure of a PIMP packet from PIMP A to PIMP B, or arrival of a packet at B from A. Left arrows, indicate the reverse. Ellipsis (...) indicates a segment which is still in the network (delayed). An "XXX" indicates a segment which is lost or rejected.
-      Comments appear in parentheses. PIMP states represent the state AFTER the departure or arrival of the segment (whose contents are shown in the center of each line). Segment contents are shown in abbreviated form, with sequence number, and ACK field. Other fields such as window, addresses, lengths, and text have been left out in the interest of clarity. 
-    </t>
-    <figure align="center">
-      <preamble>The following artwork demonstrates the connection state diagram:</preamble>
-      <artwork align="center"><![CDATA[
-PIMP A                                                         PIMP B
-                                                        CLOSED LISTEN
-SYN-SENT    --> <SEQ=100><SYNFLAG>                   --> SYN-RECEIVED
-ESTABLISHED <-- <SEQ=300><ACK=101><SYNFLAG, ACKFLAG> <-- SYN-RECEIVED
-ESTABLISHED --> <SEQ=101><ACK=301><ACKFLAG><DATA>     --> ESTABLISHED
-                  ]]>
-       </artwork>
-      <postamble>
-        PIMP Connection State Diagram
-      </postamble>
-  </figure>
-        <t>
-        The principle reason for the three-way handshake is to prevent old duplicate connection initiations from causing confusion. To deal with this, a special control message, reset, has been devised. If the receiving PIMP is in a non-synchronized state (i.e., SYN-SENT, SYN-RECEIVED), it returns to LISTEN on receiving an acceptable reset. If the TCP is in one of the synchronized states it aborts the connection and informs its user. We discuss this later case under "half-open" connections below. </t>
-        <t>
-        HALF OPEN
-        An established connection is said to be "half-open" if one of the PIMPs has closed or aborted the connection at its end without the knowledge of the other, or if the two ends of the connection have become desynchronized owing to a crash that resulted in loss of memory. Such connections will automatically become reset if an attempt is made to send data in either direction. However, half-open connections are expected to be unusual, and the recovery procedure is mildly involved.
-        If at site A the connection no longer exists, then an attempt by the user at site B to send any data on it will result in the site B PIMP receiving a reset control message. Such a message indicates to the site B PIMP that something is wrong, and it is expected to abort the connection.
-        Assume that two user processes A and B are communicating with one another when a crash occurs causing loss of memory to A's PIMP.
-        Depending on the operating system supporting A's PIMP, it is likely that some error recovery mechanism exists. When the PIMP is up again, A is likely to start again from the beginning or from a recovery point. As a result, A will probably try to OPEN the connection again or try to SEND on the connection it believes open. In the latter case, it receives the error message "connection not open" from the local (A's) PIMP. In an attempt to establish the connection, A's PIMP will send a packet containing SYN. This scenario leads to the example shown in figure 10. After PIMP A crashes, the user attempts to re-open the connection. PIMP B, in the meantime, thinks the connection is open. 
-        </t>
-      <figure align="center">
-            <preamble>The following artwork demonstrates the connection state diagram:</preamble>
-            <artwork align="center"><![CDATA[
-PIMP A                                           PIMP B
-(CRASH) (send 300,receive 100)
-CLOSED ESTABLISHED
-SYN-SENT --> <SEQ=400><SYNFLAG=TRUE>          --> (??)
-(!!)     <-- <SEQ=300><ACK=100><ACKFLAG=TRUE> <-- ESTABLISHED
-SYN-SENT --> <SEQ=100><CTL=RST>               --> (Abort!!)
-SYN-SENT CLOSED
-SYN-SENT --> <SEQ=400><SYNFLAG=TRUE>          -->
-                ]]>
-                 </artwork>
-            <postamble>
-              PIMP Connection State Diagram
-            </postamble>
-        </figure>
-        <t>When the SYN arrives at line 3, PIMP B, being in a synchronized state and the incoming segment outside the window, responds with an acknowledgment indicating what sequence it next expects to hear (ACKFLAG = TRUE SEQ=100). PIMP A sees that this segment does not acknowledge anything it sent and, being unsynchronized, sends a reset (RST) because it has detected a half-open connection. PIMP B aborts at line 5. PIMP A will continue to try to establish the connection; the problem is now reduced to the basic 3-way handshake of figure 7.
-        An interesting alternative case occurs when PIMP A crashes and PIMP B tries to send data on what it thinks is a synchronized connection.
-        This is illustrated in figure 11. In this case, the data arriving at PIMP A from PIMP B (line 2) is unacceptable because no such connection exists, so PIMP A sends a RST. The RST is acceptable so PIMP B processes it and aborts the connection.</t>
-        <figure align="center">
-            <preamble>The following artwork demonstrates the connection state diagram:</preamble>
-            <artwork align="center"><![CDATA[
-PIMP A                                                       PIMP B
-(CRASH) (send 300,receive 100)
-(??) <-- <SEQ=300><ACK=100><DATA=10><ACKFLAG=TRUE>. <-- ESTABLISHED
-     --> <SEQ=100><CTL=RST>                         --> (ABORT!!)
- SOURCE: Obviously copied from TCP RFC</t>
-                   ]]>
-             </artwork>
-            <postamble>
-              PIMP Connection State Diagram
-            </postamble>
-        </figure>
-          <!-- ARTWORK EXAMPLE -->
-      <figure anchor="xml_state" align="center">
-            <preamble>The following artwork demonstrates the connection state diagram:</preamble>
-            <artwork align="center">
-<![CDATA[ 
-                          +---------+ ---------\      active OPEN
-                          |  CLOSED |            \    -----------
-                          +---------+<---------\   \   create TCB
-                            |     ^              \   \  snd SYN
-               passive OPEN |     |   CLOSE        \   \
-               ------------ |     | ----------       \   \
-                create TCB  |     | delete TCB         \   \
-                            V     |                      \   \
-                          +---------+            CLOSE    |    \
-                          |  LISTEN |          ---------- |     |
-                          +---------+          delete TCB |     |
-               rcv SYN      |     |     SEND              |     |
-              -----------   |     |    -------            |     V
-  +-------+    snd SYN,ACK  /       \   snd SYN          +-------+
- |         |<---------------           ---------------->|         |
- |   SYN   |                rcv SYN                     |   SYN   |
- |   RCVD  |<-------------------------------------------|   SENT  |
- |         |                  snd ACK                   |         |
- |         |----------------           -----------------|         |
- +---------+ rcv ACK of SYN  \       /  rcv SYN,ACK     +---------+
-   |         --------------   |     |   -----------
-   |                x         |     |     snd ACK
-   |                          V     V
-   |  CLOSE                 +---------+
-   | -------                |  ESTAB  |
-   | snd FIN                +---------+
-   |                 CLOSE    |     |    rcv FIN
-   V                -------   |     |    -------
- +---------+        snd FIN  /       \   snd ACK        +---------+
- |  FIN    |<---------------           ---------------->|  CLOSE  |
- | WAIT-1  |------------------                          |   WAIT  |
- +---------+          rcv FIN  \                        +---------+
-   | rcv ACK of FIN   -------   |                          CLOSE  |
-   | --------------   snd ACK   |                         ------- |
-   V        x                   V                         snd FIN V
- +---------+                +---------+                 +---------+
- |FINWAIT-2|                | CLOSING |                 | LAST-ACK|
- +---------+                +---------+                 +---------+
-   |              rcv ACK of FIN |                 rcv ACK of FIN |
-   |  rcv FIN     -------------- |    Timeout=2MSL -------------- |
-   |  -------            x       V    ------------        x       V
-    \ snd ACK               +---------+delete TCB       +---------+
-     ---------------------->|TIME WAIT|---------------->| CLOSED  |
-                            +---------+                 +---------+
-]]>
-            </artwork>
-            <postamble>
-              PIMP Connection State Diagram
-            </postamble>
-        </figure>
-   
-   </section>
-
-<section title="ACK Specification">
-    <t>Under normal data transformation, the active open is performed by the client sending a SYN to the server. The client set the segment’s sequence number to a random value A. Then when server successfully receives a SYN, in response, it replies with a SYN-ACK. The Ack number  is set to one more than the received sequence number i.e A+1. and the sequence number that the server chooses for the packet is another random number,B. Finally the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A+1, and the acknowledgement number is set to one more than the received sequence number i.e. B+1. At this point, both the client and server have received and acknowledgment of the connection. And the connection is established.</t>
-
-    <t>If the first SYN packet is lost, the timeout mechanism will be called on client side and it will automatically resend the SYN packet once the ack does not arrive within the set time. And if it tries several times, connection will terminate.</t>
-
-    <t>If SYN-ACK packet sent by server or ACK packet sent by the client is lost, timeout mechanism on server side will do the same thing, which means server will actively resend out the SYN-ACK packet once the ack does not arrive within the time. And if it tries several times, connection will terminate.</t>
-
-    <t>Ideally, in the data transmission process, the client would send out data packets with continuously increment sequence numbers (seqNum). If nothing goes wrong, after the server receives a packet with seqNum = i, the server would respond back an acknowledgment packet to the client with the acknowledgment number (ackNum) equals to i + 1.</t>
-
-    <t>In the case that the server does not successfully receive data packets sent from the client, no associated acknowledgment packets will be sent back to the client. As a result, as long as the client keeps track of all the sent packets, if after a certain timeout the client still not receive the ACK for those packets, the client would consider those packets are lost, and thus re-transmit them to the server again.</t>
-
-    <t>The connection termination procedure for a pimp session is shown as following:
-    In the case the client initiates the termination, it sends a FIN. After receiving it, the server sends back a acknowledgement. The server waits for application process to close and then sends its FIN. After receiving it, the client sends back a acknowledgement. Then the server closes when receiving the ACK, and client waits until the ACK is received by the server then the client proceeds to the closed state. If any of the packet is lost during the transmission, the timeout function is applied.</t>
-</section>
-
-   <section title="PRFC Revision Process">
-   <t>Once a PRFC is officially published by the PETF, it cannot be modified further
-   for any reason. A new PRFC must be submitted that identifies the errors and 
-   proposes to "update" or "supercede" the previous document.</t>
-   
-   <t>A PRFC MUST use the "update" reference if the changes do not result in an
-   incompatible protocol and the old protocol is not shown to be insecure. 
-   Changes to PRFC's that are "updates" include:</t>
-   
-   <t><list style="numbers">
-    <t>Corrections to spelling, grammar, and other wording in the document</t>
-    <t>Additional details about operations and operational considerations</t>
-    <t>Additional parameters or interactions to the existing protocol</t>
-   </list></t>
-   
-   <t>A PRFC MUST use the "supercede" reference if the changes result in an incompatible
-   protocol OR if the previous protocol is demonstrated to be insecure.</t>
-   
-   <t>Approval from the PETF MUST be obtained if approval was required for the original
-   PRFC.</t>
-   
-   <t>A PRFC submitted without PETF approval MUST be revised only by the same PLAYGROUND
-   group that submitted the original.</t>
-   </section>
-   
-   <section title="Security Considerations">
-   <t>This specification is a documentation standard and not directly related
-   to the technical security of any protocol.</t>
-   </section>
-       <section title="Copyright Information">
-    <t>The PLAYGROUND experiment is still new and has not yet developed
-    a policy that has been reviewed by legal counsel. However, at present,
-    the following text MUST be used in the PRFC's.</t>
-    
-    <t>The copyright notice on the front page of the PRFC should read:
-    "Copyright (c) 2017 SETH JAMES NIELSON.  All rights reserved.</t>
-
-   <t>This document is used solely for educational purposes.  Any citations
-   within this document are also for educational purposes and also for
-   technical reference.  If any of these cited elements are protected
-   under copyright, their inclusion here falls under Fair Use
-   provisions."</t>
-   
-   <t>Student authors MUST grant copyrights to SETH JAMES NIELSON. However,
-   they may also retain copyrights for themselves and add their names to the
-   copyright notice accordingly.</t>
-   
-   <t> The final page of the PRFC MUST include a section entitled 
-   "Full Copyright Statement" that reads:</t>
-   
-   <t>"Copyright (C) Seth James Nielson (2017).  All Rights Reserved.</t>
-
-   <t>This document and translations of it may be copied and furnished to
-   others, and derivative works that comment on or otherwise explain it
-   or assist in its implementation may be prepared, copied, published
-   and distributed, in whole or in part, without restriction of any
-   kind, provided that the above copyright notice and this paragraph are
-   included on all such copies and derivative works.  However, this
-   document itself may not be modified in any way, such as by removing
-   the copyright notice or references to the PLAYGROUND experiment or
-   other associated organizations, except by explicit permission.</t>
-
-   <t>The limited permissions granted above are perpetual and will not be
-   revoked by SETH JAMES NIELSON or his successors or assigns.</t>
-
-   <t>This document and the information contained herein is provided on an
-   "AS IS" basis and SETH JAMES NIELSON and associated academic
-   institutions DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
-   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
-   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
-   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."</t>
-   
-   <t>After the "Full Copyright Statement" the PRFC MUST include a section
-   entitled "Intellectual Property" that reads:</t>
-
-   <t>The PLAYGROUND framework and student submissions for PLAYGROUND are
-   intended to be free of any intellectual property conflicts.  All
-   submitting parties, especially students, are not allowed to submit
-   source code, specifications, or other components that are known to be
-   protected by copyright, patents, or other IP mechanisms.  Students
-   submitting creative content grant shared rights and ownership of
-   their content to the PLAYGROUND project.  Specifically, any
-   submission can be used in future educational settings including
-   subsequent PLAYGROUND experiments.</t>
-
-   <t>Any interested party is invited to bring to the experiment director's
-   attention any copyrights, patents or patent applications, or other
-   proprietary rights which may cover technology that may be currently
-   in use without permission.</t>
-
-   <t>It should be noted that these statements have not been reviewed by
-   legal counsel.  Moreover, the academic institutions at which
-   PLAYGROUND experiments take place may have additional or even
-   conflicting copyright and intellectual property rules.  Accordingly,
-   concerned parties may need to contact their own lawyer and/or
-   resources at their institution to understand the rights and
-   limitations associated with code donated to a PLAYGROUND experiment."</t>
-   
-   <t>As with the initial copyright notice, the Copyright assignment to
-   Seth James Nielson can be agumented the the names of the authors.</t>
-    </section>
- </middle>
-
- <!--  *****BACK MATTER ***** -->
-
- <back>
-   <!-- References split into informative and normative -->
-
-   <!-- There are 2 ways to insert reference entries from the citation libraries:
-    1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
-    2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
-       (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
-    Both are cited textually in the same manner: by using xref elements.
-    If you use the PI option, xml2rfc will, by default, try to find included files in the same
-    directory as the including file. You can also define the XML_LIBRARY environment variable
-    with a value containing a set of directories to search.  These can be either in the local
-    filing system or remote ones accessed by http (http://domain/dir/... ).-->
-   
-   <references title="Normative References">
-     <!--?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0793.xml"?-->
-     <!--?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
-     &RFC2119;
-     
-   </references>
-
-
-   <!-- Change Log
-v00 2006-03-15  EBD   Initial version
-v01 2006-04-03  EBD   Moved PI location back to position 1 -
-                     v3.1 of XMLmind is better with them at this location.
-v02 2007-03-07  AH    removed extraneous nested_list attribute,
-                     other minor corrections
-v03 2007-03-09  EBD   Added comments on null IANA sections and fixed heading capitalization.
-                     Modified comments around figure to reflect non-implementation of
-                     figure indent control.  Put in reference using anchor="DOMINATION".
-                     Fixed up the date specification comments to reflect current truth.
-v04 2007-03-09 AH     Major changes: shortened discussion of PIs,
-                     added discussion of rfc include.
-v05 2007-03-10 EBD    Added preamble to C program example to tell about ABNF and alternative 
-                     images. Removed meta-characters from comments (causes problems).
-v06 2010-04-01 TT     Changed ipr attribute values to latest ones. Changed date to
-                     year only, to be consistent with the comments. Updated the 
-                     IANA guidelines reference from the I-D to the finished RFC.  
-
-v1.1 Team Kronos Update Proposal pull request 2019-03-27 
-	-Changed checksum to MD5 hash
-	-Changed header fields to match descriptions, and changed checksum from INT to BUFFER
-	-Added the packet transmission steps of the handshake (as they are defined in TCP) to the Technical Functionality
-	-Added error handling for packets received with improper flag combinations (the packet is dropped)
+           </section>
+            
+          <section title="Server Hello Request">
+              <t>The server will send this message in response to the Client Hello (see above) to proceed with the hanshake. The server processes the ClientHello and determines the cryptographic parameters it wishes to use and the ServerHello message indicates the negotiated cryptographic parameters. It thus sends over the choice of cipher as well as the server's certificate which is signed by Root Certificate Authority (Root CA). The server carries out the certification verification of the client and the client certificate number is checked in the Certificate Revocation List (CRL) as well. If it is not present in the list, the certificate is accepted. 
+              </t>
+                <t>The Server Hello ends when the server has sent the three important parameters- server certificate, Server Hello Message and the choice of cipher.The veriifcation of client certificate must also be done. All error handling related to the Server Hello Request will be explained in the Error Handling section.</t>
+          </section>
+          
+          <section title="Key Exchange / Key Transport">
+            <t>The key exchange messages are used to determine the security capabilities of the client and the server and to establish shared
+              secrets, including the traffic keys used to protect the rest of the handshake and the data.</t>
+            <t> Establish shared keying material and select the cryptographic parameters. Everything after this phase is encrypted. </t>
+          </section>
+                
                      
-SETH NIELSON:
-  Altered for PLAYGROUND AND PRFC's
-  2016-09-21 SJN PRFC 1
-  Updated for Fall 2017
-  2017-10-1
-  -->
- </back>
+         <section title = "Server and Client Certificate and Verification">
+           Server sends its certificate to the client after verifying the client's certificate and receiving the client's Hello packet. The server 
+           certificate will be verified if it has been signed by the root CA. A VerifyCert() method can be defined to take in the recieved certificate as an parameter to ferify the certificate.
+             </section>
+          
+          <section title="Parameters">
+          <t> Contents inside the GSP certificate is shown below:</t>
+            <t>
+                    <figure>
+                        <artwork><![CDATA[
+                                +--------------------------+
+                                |     GSP Certificate      |
+                                |--------------------------|
+                                |+Serial Number            |
+                                |+Signature Algorithm ID   |
+                                |+Issuer Name              |
+                                |+Validity Period          |
+                                |+Subject Name             |
+                                |+Subject Public Key Info  |
+                                | -Public Key Algorithm    |
+                                | -Subject Public Key      |
+                                |+Issuer Unique Identifier |
+                                |+Subject Unique Identifier|
+                                +--------------------------+
+    
+                                ]]>
+                        </artwork>
+                    </figure>
+                </t>      
+          </section>
+          
+          <section title="Error Handling">
+          <t>
+            1. HelloRetryRequest: When the server does not respond in the appropriate time, the client sends a HelloRetryRequest.
+            2. If any of the authentication steps fail, the handshake fails, and the session terminates.
+            3. Time out is set at 3 seconds. 
+          </t> 
+          </section>
+        </section>
+          
+          <section title="Security Considerations">
+          <section title="Trust Model">
+                <t>
+                    <list style="numbers">
+                        <t>Root certificate authority (RCA): RCA is deemed to be trusted
+                            organizations. The very existence of the RCA marks the first step in the
+                            establishment of the line of trust. The RCA certificate can
+                            be self-signed. RCA gives a certificate to each CA. RCA also maintains the main CRL.
+                        </t>
+                        <t>Certificate authority: Each company (team) has their own certificate authority (i.e., the PETF lead is the CA of the company).
+                           Each CA of the company is responsible to provide certificaets for their server and clients. CAs are responsibile to maintain and update their local CRL.
+                      </t>                 
+                    </list>
+                </t>           
+            </section>
+          </section>
+            <section title="Certificate Verification and Revocations">
+                <t> A Certificate Revocation List (CRL) is a list of digital certificates that have been revoked by the issuing Certificate Authority (CA) before their scheduled expiration date and should no longer be trusted.
+                </t>
+            </section>
+          </middle>
+
+    <!--  *****BACK MATTER ***** -->
+
+    <back>
+        <!-- References split into informative and normative -->
+
+        <!-- There are 2 ways to insert reference entries from the citation libraries:
+         1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+         2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+            (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+         Both are cited textually in the same manner: by using xref elements.
+         If you use the PI option, xml2rfc will, by default, try to find included files in the same
+         directory as the including file. You can also define the XML_LIBRARY environment variable
+         with a value containing a set of directories to search.  These can be either in the local
+         filing system or remote ones accessed by http (http://domain/dir/... ).-->
+
+        <references title="Normative References">
+            <!--?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
+            &RFC2119;
+
+            &RFC2360;
+
+            &RFC5246;
+
+            &RFC8446;
+        </references>
+    </back>
 </rfc>
