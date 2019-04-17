@@ -143,11 +143,7 @@
         <section title="Purpose">
             <t>This memorandum describes the way the secure channel is established. 
                Its purpose is to ensure message authorization, confidentiality, authenticity, and message integrity.</t>       
-            <list style="numbers">
-                  <t>Authentication: Both the server and the client need to be mutually authenticated.</t>
-                  <t>Confidentiality: Data sent over the channel after establishment is only visible to the endpoints.</t>  
-                  <t>Integrity: Data sent over the channel after establishment cannot be modified by attackers without detection. </t>    
-            </list>    
+             
         </section>
 
         <section title="Protocol Specifications">
